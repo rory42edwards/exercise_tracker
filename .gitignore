@@ -1,0 +1,6 @@
+bin/
+lib/
+lib64
+logs_txt_files/
+pyvenv.cfg
+exercise.csv
