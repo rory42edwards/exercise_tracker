@@ -80,7 +80,8 @@ def main():
             exercise = tracker.get_exercise(name)
             if exercise:
                 reps = int(input("Enter number of reps: "))
-                exercise.add_set(reps)
+                load = input("Enter load: ")
+                exercise.add_set(reps, load)
             else:
                 print("Exercise not found. Add it to the list.")
         elif choice == '3':

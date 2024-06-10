@@ -7,8 +7,8 @@ class Exercise:
         self.sets = []
         self.date = date
 
-    def add_set(self, reps):
-        self.sets.append(reps)
+    def add_set(self, reps, load):
+        self.sets.append((reps, load))
 
     def to_dict(self):
         return {'name': self.name,
