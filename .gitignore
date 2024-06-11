@@ -1,4 +1,3 @@
-.gitignore
 bin/
 lib/
 lib64
@@ -8,3 +7,6 @@ exercise.csv
 exercise_tracker/__pycache__/
 exercise_tracker/exercises.json
 exercise_tracker/add_csv.py
+share/
+etc/
+.ipynb_checkpoints/
