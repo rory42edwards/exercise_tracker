@@ -5,8 +5,8 @@ logs_txt_files/
 pyvenv.cfg
 exercise.csv
 exercise_tracker/__pycache__/
-exercise_tracker/exercises.json
-exercise_tracker/add_csv.py
+data/
 share/
 etc/
 .ipynb_checkpoints/
+analysis.ipynb
