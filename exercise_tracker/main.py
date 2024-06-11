@@ -5,7 +5,7 @@ from exercise_tracker import ExerciseTracker
 def main():
     date_string = input("Enter date (dd/mm/yy): ")
     date = datetime.strptime(date_string, "%d/%m/%y")
-    tracker = ExerciseTracker(date)
+    tracker = ExerciseTracker()
 
     try:
         tracker.load_from_file('exercises.json')
@@ -31,11 +31,11 @@ def main():
 
         if choice == '1':
             name = input("Enter exercise name: ")
-            tracker.add_exercise(name)
+            tracker.add_exercise(name, date)
         elif choice == '2':
             tracker.show_exercises()
             name = input("Enter exercise name: ")
-            exercise = tracker.get_exercise(name)
+            exercise = tracker.get_exercise(name, date)
             if exercise:
                 reps = int(input("Enter number of reps: "))
                 load = input("Enter load: ")

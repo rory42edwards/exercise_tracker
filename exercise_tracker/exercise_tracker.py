@@ -3,20 +3,20 @@ import json
 
 
 class ExerciseTracker:
-    def __init__(self, date):
+    def __init__(self):
         self.exercises = []
         self.exercise_names = []
-        self.date = date
+        # self.date = date
 
-    def add_exercise(self, name):
-        exercise = Exercise(name, self.date)
+    def add_exercise(self, name, date):
+        exercise = Exercise(name, date)
         self.exercises.append(exercise)
         if name not in self.exercise_names:
             self.exercise_names.append(name)
 
-    def get_exercise(self, name):
+    def get_exercise(self, name, date):
         for exercise in self.exercises:
-            if exercise.name == name:
+            if exercise.name == name and exercise.date == date:
                 return exercise
         return None
 
