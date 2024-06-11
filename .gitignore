@@ -1,3 +1,4 @@
+.gitignore
 bin/
 lib/
 lib64
@@ -6,3 +7,4 @@ pyvenv.cfg
 exercise.csv
 exercise_tracker/__pycache__/
 exercise_tracker/exercises.json
+exercise_tracker/add_csv.py
