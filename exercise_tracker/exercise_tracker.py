@@ -6,7 +6,6 @@ class ExerciseTracker:
     def __init__(self):
         self.exercises = []
         self.exercise_names = []
-        # self.date = date
 
     def add_exercise(self, name, date):
         exercise = Exercise(name, date)
