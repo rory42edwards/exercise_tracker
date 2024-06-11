@@ -7,8 +7,9 @@ def main():
     date = datetime.strptime(date_string, "%d/%m/%y")
     tracker = ExerciseTracker()
 
+    filename = 'data/exercises.json'
     try:
-        tracker.load_from_file('exercises.json')
+        tracker.load_from_file(filename)
         print("exercises.json loaded successfully.")
     except FileNotFoundError:
         print("exercises.json not found. Starting a new one.")
@@ -58,7 +59,7 @@ def main():
         elif choice == '3':
             tracker.show_all_exercises()
         elif choice == '4':
-            tracker.save_to_file('exercises.json')
+            tracker.save_to_file(filename)
             print("Exercises saved. Exiting.")
             break
         else:
