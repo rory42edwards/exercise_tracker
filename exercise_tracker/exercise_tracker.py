@@ -10,18 +10,25 @@ class ExerciseTracker:
     def add_exercise(self, name, date):
         exercise = Exercise(name, date)
         self.exercises.append(exercise)
+        length = len(self.exercise_names)
         if name not in self.exercise_names:
-            self.exercise_names.append(name)
+            self.exercise_names.append([length+1, name])
+
+    def get_exercise_name(self, index):
+        for names in self.exercise_names:
+            if names[0] == int(index):
+                return names[1]
+        return None  # if no match found
 
     def get_exercise(self, name, date):
         for exercise in self.exercises:
             if exercise.name == name and exercise.date == date:
                 return exercise
-        return None
+        return None  # if no match found
 
     def show_exercises(self):
         for name in self.exercise_names:
-            print(name)
+            print(f"{name[0]}: {name[1]}")
 
     def show_all_exercises(self):
         for exercise in self.exercises:

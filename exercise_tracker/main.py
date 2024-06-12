@@ -7,7 +7,7 @@ def main():
     date = datetime.strptime(date_string, "%d/%m/%y")
     tracker = ExerciseTracker()
 
-    filename = 'data/exercises.json'
+    filename = '../data/exercises.json'
     try:
         tracker.load_from_file(filename)
         print("exercises.json loaded successfully.")
@@ -35,7 +35,9 @@ def main():
             tracker.add_exercise(name, date)
         elif choice == '2':
             tracker.show_exercises()
-            name = input("Enter exercise name: ")
+            index = input("Enter exercise: ")
+            name = tracker.get_exercise_name(index)
+            print(name)
             exercise = tracker.get_exercise(name, date)
             if exercise:
                 reps = int(input("Enter number of reps: "))
