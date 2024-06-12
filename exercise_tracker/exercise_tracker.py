@@ -15,10 +15,10 @@ class ExerciseTracker:
             self.exercise_names.append([length+1, name])
 
     def get_exercise_name(self, index):
-        for names in self.exercise_names:
-            if names[0] == int(index):
-                return names[1]
-        return None  # if no match found
+        name = next((names[1] for
+                    names in self.exercise_names if
+                     names[0] == int(index)), None)
+        return name
 
     def get_exercise(self, name, date):
         for exercise in self.exercises:

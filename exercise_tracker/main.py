@@ -37,9 +37,9 @@ def main():
             tracker.show_exercises()
             index = input("Enter exercise: ")
             name = tracker.get_exercise_name(index)
-            print(name)
             exercise = tracker.get_exercise(name, date)
             if exercise:
+                print(f"Adding set to {name}:")
                 reps = int(input("Enter number of reps: "))
                 load = input("Enter load: ")
                 exercise.add_set(reps, load)
