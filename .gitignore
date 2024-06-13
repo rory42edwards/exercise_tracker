@@ -5,6 +5,7 @@ logs_txt_files/
 pyvenv.cfg
 exercise.csv
 exercise_tracker/__pycache__/
+exercise_analysis/__pycache__/
 data/
 share/
 etc/
