@@ -1,4 +1,4 @@
-from exercise import Exercise
+from exercise_tracker.exercise import Exercise
 import json
 
 
