@@ -16,11 +16,11 @@ A basic tracker/logger for my weight training
     ```
     export PYTHONPATH=$(dirname $(dirname $BASH_SOURCE))
     ```
-4. Install requirements in the virtual environment with
+5. Install requirements in the virtual environment with
     ```
     pip install -r requirements.txt
     ```
-5. Run the main script with
+6. Run the main script with
     ```
     python exercise_tracker/main.py
     ```
