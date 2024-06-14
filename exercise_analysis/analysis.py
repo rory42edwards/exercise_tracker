@@ -46,6 +46,42 @@ def plot_exercises_per_workout(exercises):
     plt.show()
 
 
+def plot_load_over_time(movement):
+    dates = []
+    highest_loads = []
+    print(f"Exercise: {movement.name}")
+    for date, sets in movement.all_sets.items():
+        date = datetime.fromisoformat(date)
+        dates.append(date)
+        loads = []
+        for pair in sets:
+            try:
+                # if load is number in kg, add that to loads
+                loads.append(float(pair[1]))
+            except ValueError:
+                try:
+                    # if load is something like 'bw',
+                    # add the number of reps to loads
+                    loads.append(float(pair[0]))
+                except ValueError:
+                    continue
+        try:
+            highest_loads.append(max(loads))
+        except ValueError:
+            continue
+        print(f"{date}: {loads}")
+    print(f"{highest_loads}")
+    if len(dates) != len(highest_loads):
+        print("Dates and highest_loads not same size! Skipping...")
+        return None
+    plt.scatter(dates, highest_loads, label=f"{movement.name} - Load")
+    plt.xlabel("Date")
+    plt.ylabel("Load / kg")
+    plt.title(f"Load over time: {movement.name}")
+    plt.xticks(rotation=45)
+    plt.show()
+
+
 def main():
     filename = '../data/exercises.json'
     with open(filename, 'r') as f:
@@ -55,6 +91,8 @@ def main():
     movements = create_movements(exercise_names, exercises)
 
     # make plots for each movement
+    for movement in movements:
+        plot_load_over_time(movement)
 
     plot_exercises_per_workout(exercises)
 
