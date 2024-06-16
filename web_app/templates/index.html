@@ -18,6 +18,17 @@
         {% if date %}
             <p>Current set date: {{ date }}</p>
             {% endif %}
+
+      <form action="/load_exercises" method="post">
+        {% if loaded %}
+            <p>exercises.json successfully loaded!</p>
+            {% endif %}
+
+        <div class="form-group">
+          <label>Load Exercises</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Load Exercises</button>
+      </form>
       <form action="/add_exercise" method="post">
         <div class="form-group">
           <label for="name">Exercise Name</label>
@@ -31,7 +42,6 @@
           <li>
             <strong>{{ exercise.name }}</strong>
             <form action="/add_set/{{ exercise.name }}" method="post" style="display:inline;">
-            <!-- <form action="/add_set" method="post" style="display:inline;"> -->
               <input type="number" name="reps" placeholder="Reps" required>
               <input type="text" name="load" placeholder="Load" required>
               <button type="submit">Add Set</button>

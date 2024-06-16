@@ -67,5 +67,18 @@ def save_exercises():
     return redirect(url_for('index'))
 
 
+@app.route('/load_exercises', methods=['POST'])
+def load_exercises():
+    try:
+        session['loaded'] = True
+        with open("data/exercises.json", 'r') as f:
+            exercises_data = json.load(f)
+            tracker.exercises =\
+                [Exercise.from_dict(data) for data in exercises_data]
+    except FileNotFoundError:
+        return "exercises.json not found!"
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
