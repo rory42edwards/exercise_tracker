@@ -1,5 +1,5 @@
 from datetime import datetime
-from exercise_tracker import ExerciseTracker
+from exercise_tracker.exercise_tracker import ExerciseTracker
 
 
 def main():
@@ -7,7 +7,7 @@ def main():
     date = datetime.strptime(date_string, "%d/%m/%y")
     tracker = ExerciseTracker()
 
-    filename = '../data/exercises.json'
+    filename = 'data/exercises.json'
     try:
         tracker.load_from_file(filename)
         print("exercises.json loaded successfully.")

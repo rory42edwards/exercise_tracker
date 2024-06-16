@@ -11,3 +11,4 @@ share/
 etc/
 .ipynb_checkpoints/
 analysis.ipynb
+flask_session/
