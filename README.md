@@ -20,7 +20,7 @@ A basic tracker/logger for my weight training
     ```
     pip install -r requirements.txt
     ```
-6. Run the main script with
+6. Run the CLI version with
     ```
-    python exercise_tracker/main.py
+    python cli_app/main.py
     ```
