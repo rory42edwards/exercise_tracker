@@ -2,42 +2,36 @@ from datetime import datetime
 from exercise_tracker.exercise_tracker import ExerciseTracker
 
 
-def main():
+def add_new_workout(tracker):
     date_string = input("Enter date (dd/mm/yy): ")
     date = datetime.strptime(date_string, "%d/%m/%y")
-    tracker = ExerciseTracker()
-
-    filename = 'data/exercises.json'
-    try:
-        tracker.load_from_file(filename)
-        print("exercises.json loaded successfully.")
-    except FileNotFoundError:
-        print("exercises.json not found. Starting a new one.")
 
     # check for duplicate date in datebase
-    for exercise in tracker.exercises:
-        if date == exercise.date:
+    for workout in tracker.workouts:
+        if date == workout.date:
             response = input("Date already found\
  in database! Are you sure you want to continue? [y/n] ")
             if response.lower() == 'n':
                 exit()
+    tracker.add_workout(date)
+    workout = tracker.get_workout(date)
 
     while True:
-        # print options to user
-        print("1. Add new exercise")
+        print("1. Add exercise")
         print("2. Add set to exercise")
-        print("3. Show all exercises")
-        print("4. Save and exit")
+        print("3. Show workout")
+        print("4. Save and return to tracker")
         choice = input("Enter option: ")
 
         if choice == '1':
             name = input("Enter exercise name: ")
-            tracker.add_exercise(name, date)
+            workout.add_exercise(name)
+
         elif choice == '2':
-            tracker.show_exercises()
+            workout.show_exercises()
             index = input("Enter exercise: ")
-            name = tracker.get_exercise_name(index)
-            exercise = tracker.get_exercise(name, date)
+            name = workout.get_exercise_name(index)
+            exercise = workout.get_exercise(name)
             if exercise:
                 print(f"Adding set to {name}:")
                 reps = int(input("Enter number of reps: "))
@@ -55,17 +49,49 @@ def main():
                     print(f"Added {set_counter} set to {name}.")
                 else:
                     print(f"Added {set_counter} sets to {name}.")
-
             else:
                 print("Exercise not found. Add it to the list.")
+
         elif choice == '3':
-            tracker.show_all_exercises()
+            workout.show_all_exercises()
+
         elif choice == '4':
+            break
+
+
+def print_tracker_console(tracker, filename):
+    while True:
+        print("1. Add new workout")
+        print("2. Show all workouts")
+        print("3. Save and exit")
+        choice = input("Enter option: ")
+
+        if choice == '1':
+            add_new_workout(tracker)
+
+        elif choice == '2':
+            tracker.show_all_workouts()
+
+        elif choice == '3':
             tracker.save_to_file(filename)
             print("Exercises saved. Exiting.")
             break
+
         else:
             print("Not a valid option. Try again.")
+
+
+def main():
+    tracker = ExerciseTracker()
+
+    filename = 'data/workouts.json'
+    try:
+        tracker.load_from_file(filename)
+        print(f"{filename} loaded successfully.")
+    except FileNotFoundError:
+        print(f"{filename} not found. Starting a new one.")
+
+    print_tracker_console(tracker, filename)
 
 
 if __name__ == "__main__":

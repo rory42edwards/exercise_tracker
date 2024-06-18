@@ -5,26 +5,29 @@ from movement import Movement
 from datetime import datetime
 
 
-def get_exercises(exercises):
+def get_exercises(workouts):
     # create unique list of exercise names
     exercise_names = []
-    for exercise in exercises:
-        # print(exercise['name'])
-        if exercise['name'] not in exercise_names:
-            exercise_names.append(exercise['name'])
+    for workout in workouts:
+        print(workout)
+        for exercise in workout['exercises']:
+            print(exercise)
+            if exercise['name'] not in exercise_names:
+                exercise_names.append(exercise['name'])
     return exercise_names
 
 
-def create_movements(exercise_names, exercises):
+def create_movements(exercise_names, workouts):
     movements = [Movement(name) for name in exercise_names]
 
     for movement in movements:
         # print(exercise['name'])
         # print(exercise['date'])
         # print(exercise['sets'])
-        for exercise in exercises:
-            if exercise['name'] == movement.name:
-                movement.add_workout(exercise['date'], exercise['sets'])
+        for workout in workouts:
+            for exercise in workout['exercises']:
+                if exercise['name'] == movement.name:
+                    movement.add_workout(workout['date'], exercise['sets'])
         # print(movement)
     return movements
 
@@ -61,8 +64,8 @@ def plot_load_over_time(movement):
             except ValueError:
                 try:
                     # if load is something like 'bw',
-                    # add the number of reps to loads
-                    loads.append(float(pair[0]))
+                    # add 0 to loads to show weight added over time
+                    loads.append(0)
                 except ValueError:
                     continue
         try:
@@ -83,18 +86,18 @@ def plot_load_over_time(movement):
 
 
 def main():
-    filename = '../data/exercises.json'
+    filename = 'data/workouts.json'
     with open(filename, 'r') as f:
-        exercises = json.load(f)
+        workouts = json.load(f)
 
-    exercise_names = get_exercises(exercises)
-    movements = create_movements(exercise_names, exercises)
+    exercise_names = get_exercises(workouts)
+    movements = create_movements(exercise_names, workouts)
 
     # make plots for each movement
     for movement in movements:
         plot_load_over_time(movement)
 
-    plot_exercises_per_workout(exercises)
+    plot_exercises_per_workout(workouts)
 
 
 if __name__ == '__main__':

@@ -1,46 +1,32 @@
-from exercise_tracker.exercise import Exercise
+from exercise_tracker.workout import Workout
 import json
 
 
 class ExerciseTracker:
     def __init__(self):
-        self.exercises = []
-        self.exercise_names = []
+        self.workouts = []
 
-    def add_exercise(self, name, date):
-        exercise = Exercise(name, date)
-        self.exercises.append(exercise)
-        length = len(self.exercise_names)
-        if name not in self.exercise_names:
-            self.exercise_names.append([length+1, name])
+    def add_workout(self, date):
+        workout = Workout(date)
+        self.workouts.append(workout)
 
-    def get_exercise_name(self, index):
-        name = next((names[1] for
-                    names in self.exercise_names if
-                     names[0] == int(index)), None)
-        return name
-
-    def get_exercise(self, name, date):
-        for exercise in self.exercises:
-            if exercise.name == name and exercise.date == date:
-                return exercise
+    def get_workout(self, date):
+        for workout in self.workouts:
+            if workout.date == date:
+                return workout
         return None  # if no match found
 
-    def show_exercises(self):
-        for name in self.exercise_names:
-            print(f"{name[0]}: {name[1]}")
-
-    def show_all_exercises(self):
-        for exercise in self.exercises:
-            print(exercise)
+    def show_all_workouts(self):
+        for workout in self.workouts:
+            print(workout)
 
     def save_to_file(self, filename):
         with open(filename, 'w') as f:
-            json.dump([exercise.to_dict()
-                       for exercise in self.exercises], f, indent=4)
+            json.dump([workout.to_dict()
+                       for workout in self.workouts], f, indent=4)
 
     def load_from_file(self, filename):
         with open(filename, 'r') as f:
-            exercises_data = json.load(f)
-            self.exercises =\
-                [Exercise.from_dict(data) for data in exercises_data]
+            workouts_data = json.load(f)
+            self.workouts =\
+                [Workout.from_dict(data) for data in workouts_data]
