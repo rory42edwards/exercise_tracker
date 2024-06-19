@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import json
-from movement import Movement
+from exercise_tracker.exercise import Exercise
+from exercise_analysis.movement import Movement
 from datetime import datetime
 
 
-def get_exercises(workouts):
+def get_exercises(workouts: list[dict]) -> list[str]:
     # create unique list of exercise names
     exercise_names = []
     for workout in workouts:
@@ -17,7 +18,8 @@ def get_exercises(workouts):
     return exercise_names
 
 
-def create_movements(exercise_names, workouts):
+def create_movements(exercise_names: list[str],
+                     workouts: dict) -> list[Movement]:
     movements = [Movement(name) for name in exercise_names]
 
     for movement in movements:
@@ -32,7 +34,7 @@ def create_movements(exercise_names, workouts):
     return movements
 
 
-def plot_exercises_per_workout(exercises):
+def plot_exercises_per_workout(exercises: dict) -> None:
     dates = [datetime.fromisoformat(exercise['date'])
              for exercise in exercises]
 
@@ -49,7 +51,7 @@ def plot_exercises_per_workout(exercises):
     plt.show()
 
 
-def plot_load_over_time(movement):
+def plot_load_over_time(movement: Movement) -> None:
     dates = []
     highest_loads = []
     print(f"Exercise: {movement.name}")
@@ -85,7 +87,7 @@ def plot_load_over_time(movement):
     plt.show()
 
 
-def main():
+def main() -> None:
     filename = 'data/workouts.json'
     with open(filename, 'r') as f:
         workouts = json.load(f)

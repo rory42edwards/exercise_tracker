@@ -1,38 +1,24 @@
-from datetime import datetime
+from typing import Type
 
 
 class Exercise:
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
-        self.sets = []
-        # self.date = date
+        self.sets: list[tuple] = []
 
-    def add_set(self, reps, load):
+    def add_set(self, reps: int, load: float) -> None:
         self.sets.append((reps, load))
 
-    # def to_dict(self):
-        # return {'name': self.name,
-                # 'sets': self.sets,
-                # 'date': self.date.isoformat()  # convert datetime to ISO string
-                # }
-
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {'name': self.name,
                 'sets': self.sets
                 }
 
-    # @classmethod
-    # def from_dict(cls, data):
-        # exercise = cls(data['name'], datetime.fromisoformat(data['date']))
-        # exercise.sets = data['sets']
-        # return exercise
-
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls: Type['Exercise'], data: dict) -> 'Exercise':
         exercise = cls(data['name'])
         exercise.sets = data['sets']
         return exercise
 
     def __str__(self):
-        # return f'{self.name}: {self.sets} on {self.date.strftime("%Y-%m-%d")}'
         return f'{self.name}: {self.sets}'

@@ -2,7 +2,7 @@ from datetime import datetime
 from exercise_tracker.exercise_tracker import ExerciseTracker
 
 
-def add_new_workout(tracker):
+def add_new_workout(tracker: ExerciseTracker) -> None:
     date_string = input("Enter date (dd/mm/yy): ")
     date = datetime.strptime(date_string, "%d/%m/%y")
 
@@ -59,7 +59,7 @@ def add_new_workout(tracker):
             break
 
 
-def print_tracker_console(tracker, filename):
+def print_tracker_console(tracker: ExerciseTracker, filename: str):
     while True:
         print("1. Add new workout")
         print("2. Show all workouts")
@@ -81,7 +81,7 @@ def print_tracker_console(tracker, filename):
             print("Not a valid option. Try again.")
 
 
-def main():
+def main() -> None:
     tracker = ExerciseTracker()
 
     filename = 'data/workouts.json'
