@@ -8,6 +8,21 @@ class ExerciseTracker:
     def __init__(self):
         self.workouts = []
 
+    def workouts_by_date(self) -> list[Workout]:
+        """
+        Returns a list of the workouts in the
+        tracker sorted by date from newest to oldest.
+        I think this function could probably be a lot cleaner...
+        """
+        dates = [workout.date for workout in self.workouts]
+        dates.sort(reverse=True)
+        sorted_workouts = []
+        for date in dates:
+            for workout in self.workouts:
+                if date == workout.date:
+                    sorted_workouts.append(workout)
+        return sorted_workouts
+
     def add_workout(self, date: datetime) -> None:
         workout = Workout(date)
         self.workouts.append(workout)
