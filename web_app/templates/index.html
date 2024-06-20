@@ -14,17 +14,6 @@
           <a href="{{ url_for('main.analysis') }}">Analysis</a>
       </nav>
 
-      <form action="/load_workouts" method="post">
-        {% if loaded %}
-            <p>workouts.json successfully loaded!</p>
-            {% endif %}
-
-        <div class="form-group">
-        </div>
-        <button type="submit" class="btn btn-primary">Load Workouts</button>
-      </form>
-
-
       <form action="add_workout" method="post">
           <div class="form-group">
             <label for="date">Enter date:</label>
@@ -63,11 +52,6 @@
           </li>
         {% endfor %}
       </ul>
-      <form action="/save_workouts" method="post">
-        <div class="form-group">
-        </div>
-        <button type="submit" class="btn btn-primary">Save Workouts</button>
-      </form>
     </div>
   </body>
 </html>
