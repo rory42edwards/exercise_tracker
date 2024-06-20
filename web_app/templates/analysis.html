@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>New Page</title>
+    <title>Exercise Tracker</title>
   </head>
   <body>
     <div class="container">
-      <h1>New Page</h1>
+      <h1>Exercise Analysis</h1>
+      <nav>
+          <a href="{{ url_for('main.index') }}">Tracker</a>
+          <a href="{{ url_for('main.analysis') }}">Analysis</a>
+      </nav>
       <p>This is a new page.</p>
     </div>
   </body>
-  <li><a href="{{ url_for('main.index')}}">Home</li>
 </html>

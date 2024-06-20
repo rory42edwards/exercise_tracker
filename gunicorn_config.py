@@ -16,4 +16,4 @@ errorlog = '-'
 
 loglevel = 'info'
 
-daemon = True
+daemon = False
