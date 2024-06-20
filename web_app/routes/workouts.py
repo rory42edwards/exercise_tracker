@@ -28,7 +28,7 @@ def add_workout():
 
 @bp.route('/save_workouts', methods=['POST'])
 def save_workouts():
-    tracker.save_to_file('date/workouts.json')
+    tracker.save_to_file('data/workouts.json')
     return redirect(url_for('main.index'))
 
 
