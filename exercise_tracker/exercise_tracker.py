@@ -29,7 +29,7 @@ class ExerciseTracker:
 
     def get_workout(self, date: datetime) -> Union[Workout, None]:
         for workout in self.workouts:
-            if workout.date == date:
+            if workout.date.date() == date.date():
                 return workout
         return None  # if no match found
 

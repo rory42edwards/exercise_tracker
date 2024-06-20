@@ -9,7 +9,12 @@ class Workout:
     """
 
     def __init__(self, date: datetime):
-        self.date = date
+        if isinstance(date, str):
+            self.date = datetime.strptime(date, "%Y-%m-%d")
+        elif isinstance(date, datetime):
+            self.date = date
+        else:
+            raise ValueError("Invalid date type. Must be string or datetime.")
         self.exercises: list[Exercise] = []
         self.exercise_names: list[list] = []
 
