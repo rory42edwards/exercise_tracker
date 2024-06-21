@@ -45,3 +45,17 @@ def add_set(date, name):
     exercise.add_set(reps, load)
     g.tracker.save_to_file('data/workouts.json')
     return redirect(url_for('main.index'))
+
+
+@bp.route('/remove_exercise/<date>/<name>', methods=['POST'])
+def remove_exercise(date, name):
+    date_dt = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+    workout = g.tracker.get_workout(date_dt)
+    if not workout:
+        return f"No workout found for date: {date}"
+    exercise = workout.get_exercise(name)
+    if not exercise:
+        return "Exercise not found. Please add it."
+    workout.remove_exercise(exercise.name)
+    g.tracker.save_to_file('data/workouts.json')
+    return redirect(url_for('main.index'))

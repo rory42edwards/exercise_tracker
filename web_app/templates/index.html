@@ -26,13 +26,18 @@
       <ul>
         {% for workout in workouts %}
           <li>
-            <strong>{{ workout.date }}</strong>
+            <strong>{{ workout.date.date() }}</strong>
+            <form action="/remove_workout/{{ workout.date }}" method="post" style="display:inline;">
+                <div class="form-group">
+                </div>
+                <button type="submit" class="btn btn-primary">Delete This Workout</button>
+            </form>
+            <ul>
             <form action="/add_exercise/{{ workout.date }}" method="post" style="display:inline;">
                 <input type="text" name="name" placeholder="Exercise name" required>
                 <input type="hidden" name="date"  value="{{ workout.date }}">
                 <button type="submit">Add Exercise</button>
             </form>
-            <ul>
             {% for exercise in workout.exercises %}
               <li>
                 <strong>{{ exercise.name }}</strong>
@@ -45,6 +50,9 @@
                   {% for reps, load in exercise.sets %}
                     <li>{{ reps }} reps @ {{ load }}</li>
                   {% endfor %}
+                  <form action="/remove_exercise/{{ workout.date }}/{{ exercise.name }}" method="post" style="display:inline;">
+                      <button type="submit">Delete this exercise</button>
+                  </form>
                 </ul>
               </li>
             {% endfor %}

@@ -20,7 +20,8 @@ def add_new_workout(tracker: ExerciseTracker) -> None:
         print("1. Add exercise")
         print("2. Add set to exercise")
         print("3. Show workout")
-        print("4. Save and return to tracker")
+        print("4. Delete exercise")
+        print("5. Save and return to tracker")
         choice = input("Enter option: ")
 
         if choice == '1':
@@ -56,6 +57,13 @@ def add_new_workout(tracker: ExerciseTracker) -> None:
             workout.show_all_exercises()
 
         elif choice == '4':
+            workout.show_exercises()
+            index = input("Enter exercise: ")
+            name = workout.get_exercise_name(index)
+            workout.remove_exercise(name)
+            print(f"Removed {name} from workout.")
+
+        elif choice == '5':
             break
 
 

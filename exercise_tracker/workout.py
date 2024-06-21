@@ -18,6 +18,14 @@ class Workout:
         self.exercises: list[Exercise] = []
         self.exercise_names: list[list] = []
 
+    def remove_exercise(self, name: str) -> None:
+        for exercise in self.exercises:
+            if exercise.name.lower() == name.lower():
+                self.exercises.remove(exercise)
+        for index_name in self.exercise_names:
+            if index_name[1].lower() == name.lower():
+                self.exercise_names.remove(index_name)
+
     def add_exercise(self, name: str) -> None:
         exercise = Exercise(name)
         self.exercises.append(exercise)
@@ -60,4 +68,4 @@ class Workout:
         return workout
 
     def __str__(self):
-        return f"Workout on: {self.date}"
+        return f"Workout on: {self.date.date()}"

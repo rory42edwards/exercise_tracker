@@ -27,6 +27,11 @@ class ExerciseTracker:
         workout = Workout(date)
         self.workouts.append(workout)
 
+    def remove_workout(self, date: datetime) -> None:
+        for workout in self.workouts:
+            if workout.date == date:
+                self.workouts.remove(workout)
+
     def get_workout(self, date: datetime) -> Union[Workout, None]:
         for workout in self.workouts:
             if workout.date.date() == date.date():

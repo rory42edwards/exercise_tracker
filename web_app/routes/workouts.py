@@ -26,3 +26,11 @@ def add_workout():
     g.tracker.add_workout(date)
     g.tracker.save_to_file('data/workouts.json')
     return redirect(url_for('main.index'))
+
+
+@bp.route('/remove_workout/<date>', methods=['POST'])
+def remove_workout(date):
+    date_dt = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+    g.tracker.remove_workout(date_dt)
+    g.tracker.save_to_file('data/workouts.json')
+    return redirect(url_for('main.index'))
