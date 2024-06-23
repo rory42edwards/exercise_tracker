@@ -1,9 +1,10 @@
 from exercise_analysis.movement import Movement
 from exercise_tracker.workout import Workout
 from datetime import datetime
-from typing import Type, Union
+from typing import Type, Union, Optional
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import os
 
 
 class ExerciseAnalyser:
@@ -44,28 +45,33 @@ class ExerciseAnalyser:
         plt.tight_layout()
         plt.show()
 
-    def plot_load_over_time(self, movement: Movement) -> None:
+    def plot_load_over_time(self, movement: Movement) -> Optional[str]:
         dates = []
         highest_loads = []
-        print(f"Exercise: {movement.name}")
         for date, sets in movement.all_sets.items():
             # date = datetime.fromisoformat(date)
-            dates.append(date)
+            dates.append(date.date())
             loads = []
             for pair in sets:
                 loads.append(float(pair[1]))
             highest_loads.append(max(loads))
-            print(f"{date}: {loads}")
-        print(f"{highest_loads}")
         if len(dates) != len(highest_loads):
-            print("Dates and highest_loads not same size! Skipping...")
             return None
+        plt.figure()
         plt.scatter(dates, highest_loads, label=f"{movement.name} - Load")
         plt.xlabel("Date")
         plt.ylabel("Load / kg")
         plt.title(f"Load over time: {movement.name}")
         plt.xticks(rotation=45)
-        plt.show()
+
+        static_folder = os.path.join(os.path.dirname(__file__),
+                                     '..', 'static', 'images')
+        if not os.path.exists(static_folder):
+            os.makedirs(static_folder)
+        filepath = os.path.join(static_folder, f"{movement.name}.png")
+        plt.savefig(filepath, format="png")
+        plt.close()
+        return filepath
 
     def get_movement(self, name: str) -> Union[Movement, None]:
         for movement in self.movements:

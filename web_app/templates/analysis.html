@@ -19,9 +19,10 @@
           {% for movement in movements %}
               <li>
               <strong>{{ movement.name }}</strong>
-              <form action="/plot_movement_load/{{ movement.name }}" method="post" style="display:inline;">
-                  <button type="submit">Plot Movement</button>
+              <form action="{{ url_for('analysis.plot_movement_load', name=movement.name) }}" method="post">
+                  <button type="submit">Plot {{ movement.name }}</button>
               </form>
+              <img src="{{ url_for('static', filename='images/' ~ movement.name ~ ' .png') }}" alt="Plot Image">
               </li>
           {% endfor %}
     </div>
