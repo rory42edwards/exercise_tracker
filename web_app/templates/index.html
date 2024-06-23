@@ -3,55 +3,55 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Exercise Tracker</title>
   </head>
   <body>
     <div class="container">
-      <h1>Exercise Tracker</h1>
+      <h1 class="mt-5">Exercise Tracker</h1>
       <nav>
           <a href="{{ url_for('main.index') }}">Tracker</a>
           <a href="{{ url_for('main.analysis') }}">Analysis</a>
       </nav>
 
-      <form action="add_workout" method="post">
+      <form action="add_workout" method="post" class="mb-3">
           <div class="form-group">
             <label for="date">Enter date:</label>
             <input type="date" id="date" name="date" required>
-            <button type="submit" class="btn btn-primary">Add New Workout</button>
+            <button type="submit" class="btn btn-primary mt-2">Add New Workout</button>
           </div>
       </form>
 
       <h2>Workouts</h2>
-      <ul>
+      <ul class="list-group">
         {% for workout in workouts %}
-          <li>
+          <li class="list-group-item">
             <strong>{{ workout.date.date() }}</strong>
-            <form action="/remove_workout/{{ workout.date }}" method="post" style="display:inline;">
+            <form action="/remove_workout/{{ workout.date }}" method="post" class="d-inline">
                 <div class="form-group">
                 </div>
-                <button type="submit" class="btn btn-primary">Delete This Workout</button>
+                <button type="submit" class="btn btn-secondary">Delete This Workout</button>
             </form>
-            <ul>
-            <form action="/add_exercise/{{ workout.date }}" method="post" style="display:inline;">
-                <input type="text" name="name" placeholder="Exercise name" required>
+            <ul class="list-unstyled">
+            <form action="/add_exercise/{{ workout.date }}" method="post" class="d-inline">
+                <input type="text" name="name" placeholder="Exercise name" class="form-control d-inline-block w-auto" required>
                 <input type="hidden" name="date"  value="{{ workout.date }}">
-                <button type="submit">Add Exercise</button>
+                <button type="submit" class="btn btn-secondary">Add Exercise</button>
             </form>
             {% for exercise in workout.exercises %}
               <li>
                 <strong>{{ exercise.name }}</strong>
-                <form action="/add_set/{{ workout.date }}/{{ exercise.name }}" method="post" style="display:inline;">
-                  <input type="number" name="reps" placeholder="Reps" required>
-                  <input type="number" name="load" placeholder="Load (0 if bw)" step=0.5 required>
-                  <button type="submit">Add Set</button>
+                <form action="/add_set/{{ workout.date }}/{{ exercise.name }}" method="post" class="d-inline">
+                  <input type="number" name="reps" placeholder="Reps" class="form-control d-inline-block w-auto" required>
+                  <input type="number" name="load" placeholder="Load (0 if bw)" step=0.5 class="form-control d-inline-block w-auto" required>
+                  <button type="submit" class="btn btn-secondary">Add Set</button>
                 </form>
-                <ul>
+                <ul class="list-unstyled">
                   {% for reps, load in exercise.sets %}
                     <li>{{ reps }} reps @ {{ load }}</li>
                   {% endfor %}
-                  <form action="/remove_exercise/{{ workout.date }}/{{ exercise.name }}" method="post" style="display:inline;">
-                      <button type="submit">Delete this exercise</button>
+                  <form action="/remove_exercise/{{ workout.date }}/{{ exercise.name }}" method="post" class="d-inline">
+                      <button type="submit" class="btn btn-secondary">Delete this exercise</button>
                   </form>
                 </ul>
               </li>
@@ -61,5 +61,9 @@
         {% endfor %}
       </ul>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
