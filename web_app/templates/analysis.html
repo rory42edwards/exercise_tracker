@@ -13,7 +13,17 @@
           <a href="{{ url_for('main.index') }}">Tracker</a>
           <a href="{{ url_for('main.analysis') }}">Analysis</a>
       </nav>
-      <p>This is a new page.</p>
+
+      <h2>Movements</h2>
+      <ul>
+          {% for movement in movements %}
+              <li>
+              <strong>{{ movement.name }}</strong>
+              <form action="/plot_movement_load/{{ movement.name }}" method="post" style="display:inline;">
+                  <button type="submit">Plot Movement</button>
+              </form>
+              </li>
+          {% endfor %}
     </div>
   </body>
 </html>

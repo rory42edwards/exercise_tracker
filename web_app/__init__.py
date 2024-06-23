@@ -9,10 +9,11 @@ def create_app():
     Session(app)
 
     with app.app_context():
-        from .routes import main, exercises, workouts
+        from .routes import main, exercises, workouts, analysis
 
         app.register_blueprint(main.bp)
         app.register_blueprint(exercises.bp)
         app.register_blueprint(workouts.bp)
+        app.register_blueprint(analysis.bp)
 
     return app

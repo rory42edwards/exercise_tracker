@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, g
 from exercise_tracker import tracker
+from exercise_analysis import analyser
 
 
 bp = Blueprint('main', __name__)
@@ -11,9 +12,16 @@ def load_tracker():
         g.tracker = tracker
 
 
+def load_analyser():
+    if 'analyser' not in g:
+        analyser.create_movements(g.tracker.workouts)
+        g.analyser = analyser
+
+
 @bp.before_request
 def before_request():
     load_tracker()
+    load_analyser()
 
 
 @bp.route('/')
@@ -29,4 +37,6 @@ def index():
 
 @bp.route('/analysis')
 def analysis():
-    return render_template('analysis.html')
+    movements = g.analyser.movements
+    return render_template('analysis.html',
+                           movements=movements)

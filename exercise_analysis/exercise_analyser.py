@@ -1,7 +1,7 @@
 from exercise_analysis.movement import Movement
 from exercise_tracker.workout import Workout
 from datetime import datetime
-from typing import Type
+from typing import Type, Union
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -66,3 +66,9 @@ class ExerciseAnalyser:
         plt.title(f"Load over time: {movement.name}")
         plt.xticks(rotation=45)
         plt.show()
+
+    def get_movement(self, name: str) -> Union[Movement, None]:
+        for movement in self.movements:
+            if movement.name.lower() == name.lower():
+                return movement
+        return None
