@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Movement:
     """
     The Movement class is for analysis as a way to combine\
@@ -8,7 +11,7 @@ class Movement:
         self.name = name
         self.all_sets: dict = {}
 
-    def add_workout(self, date, sets) -> None:
+    def add_workout(self, date: datetime, sets: list[tuple]) -> None:
         self.all_sets.update({date: sets})
 
     def __str__(self):
