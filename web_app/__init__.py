@@ -3,7 +3,7 @@ from flask_session import Session
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static', static_folder='static')
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SECRET_KEY'] = 'bj69420'
     Session(app)
