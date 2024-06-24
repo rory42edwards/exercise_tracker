@@ -1,45 +1,44 @@
 <!doctype html>
 <html lang="en">
     <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Exercise Tracker</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>Exercise Tracker</title>
+    </head>
   <body>
-  <div class="container">
-    <h1>Analysis</h1>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <form id="plotForm">
-      <label for="exerciseName">Exercise Name:</label>
-      <input type="text" id="exerciseName" name="exerciseName" required>
-      <button type="submit">Plot</button>
-    </form>
-  </div>
-  <script src="{{ url_for('static', filename='dist/main.js') }}"></script>
-    <div class="container">
-      <h1>Exercise Analysis</h1>
-      <nav>
-          <a href="{{ url_for('main.index') }}">Tracker</a>
-          <a href="{{ url_for('main.analysis') }}">Analysis</a>
-      </nav>
+      <div class="container">
+        <h1>Exercise Tracker</h1>
+          <nav>
+              <a href="{{ url_for('main.index') }}">Tracker</a>
+              <a href="{{ url_for('main.analysis') }}">Analysis</a>
+          </nav>
 
-      <h2>Movements</h2>
-      <ul class="list-group">
-          {% for movement in movements %}
-              <li>
-              <strong>{{ movement.name }}</strong>
-              <form action="{{ url_for('analysis.plot_movement_load', name=movement.name) }}" method="post">
-                  <button type="submit" class="btn btn-secondary">Plot {{ movement.name }}</button>
-              </form>
-              <img src="{{ url_for('static', filename='images/' ~ movement.name ~ ' .png') }}" alt="Plot Image">
-              </li>
-          {% endfor %}
-    </div>
+        <form id="plotForm" class="mb-3">
+            <div class="form-group">
+              <label for="exerciseName">Exercise Name:</label>
+              <input type="text" id="exerciseName" name="exerciseName" class="form-control" required>
+              <button type="submit" class="btn btn-primary mt-2">Plot</button>
+            </div>
+        </form>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+          <h2>Movements</h2>
+          <ul class="list-group">
+              {% for movement in movements %}
+                <div>
+                    <button id="plotbutton_{{ movement.name }}" class="plot-button" data-exercise="{{ movement.name }}">
+                        Plot {{ movement.name }}
+                    </button>
+                </div>
+              {% endfor %}
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+      </div>
   </body>
 </html>
