@@ -12,6 +12,8 @@ class ExerciseAnalyser:
         self.movements = []
 
     def create_movements(self, workouts: list['Workout']) -> None:
+        # make sure self.movements is empty
+        self.movements.clear()
         # create unique list of exercise names
         exercise_names = []
         for workout in workouts:
