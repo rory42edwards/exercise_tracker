@@ -29,7 +29,7 @@ const myChart = new Chart(ctx, {
         }
       },
       y: {
-        beginAtZero: true
+        beginAtZero: false
       }
     }
   }
