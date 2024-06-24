@@ -1,7 +1,7 @@
-from flask import Blueprint, g, send_file
+from flask import Blueprint, g, request
+from flask.json import jsonify
 from exercise_analysis import analyser
 from exercise_tracker import tracker
-import os
 
 
 bp = Blueprint('analysis', __name__)
@@ -25,13 +25,22 @@ def before_request():
     load_analyser()
 
 
-@bp.route('/plot_movement_load/<name>', methods=['POST'])
-def plot_movement_load(name):
+# @bp.route('/plot_movement_load/<name>', methods=['POST'])
+# def plot_movement_load(name):
+@bp.route('/api/exercise_data/', methods=['GET'])
+def get_exercise_data():
+    name = request.args.get('name')
+    if not name:
+        return jsonify({'error': 'Name parameter is required'}), 400
     movement = g.analyser.get_movement(name)
     if not movement:
-        return f"Movement: {name} not found!"
-    filepath = g.analyser.plot_load_over_time(movement)
-    if filepath:
-        return send_file(filepath, mimetype='image/png')
+        # return f"Movement: {name} not found!"
+        return jsonify({'error': f"Movement: {name} not found!"}), 404
+    data = g.analyser.get_plot_data(movement)
+    if data:
+        print(data)
+        # return send_file(filepath, mimetype='image/png')
+        return jsonify(data)
     else:
-        return "Failed to generate plot", 500
+        return jsonify({'error': "Failed to generate plot"}), 500
+        # return "Failed to generate plot", 500

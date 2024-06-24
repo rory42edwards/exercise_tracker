@@ -49,7 +49,6 @@ class ExerciseAnalyser:
         dates = []
         highest_loads = []
         for date, sets in movement.all_sets.items():
-            # date = datetime.fromisoformat(date)
             dates.append(date.date())
             loads = []
             for pair in sets:
@@ -72,6 +71,18 @@ class ExerciseAnalyser:
         plt.savefig(filepath, format="png")
         plt.close()
         return filepath
+
+    def get_plot_data(self, movement: Movement) -> dict:
+        dates = []
+        highest_loads = []
+        for date, sets in movement.all_sets.items():
+            dates.append(date.isoformat())
+            loads = [float(pair[1]) for pair in sets]
+            highest_loads.append(max(loads))
+        return {
+                'labels': dates,
+                'values': highest_loads
+        }
 
     def get_movement(self, name: str) -> Union[Movement, None]:
         for movement in self.movements:

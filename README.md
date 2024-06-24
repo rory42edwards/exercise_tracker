@@ -24,3 +24,13 @@ A basic tracker/logger for my weight training
     ```
     python cli_app/main.py
     ```
+
+## Using the web application
+1. Follow steps 1-5 above.
+
+2. Start the web application by running the script:
+    ```
+    ./run_web_app.sh
+    ```
+
+3. Access the web app at `<address_to_computer>:8000`.
