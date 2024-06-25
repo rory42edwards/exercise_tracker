@@ -3,7 +3,7 @@ from typing import Type
 
 class Exercise:
     def __init__(self, name: str):
-        self.name = name
+        self.name = name.lower()
         self.sets: list[tuple] = []
 
     def add_set(self, reps: int, load: float) -> None:

@@ -8,7 +8,7 @@ class Movement:
     """
 
     def __init__(self, name: str):
-        self.name = name
+        self.name = name.lower()
         self.all_sets: dict = {}
 
     def add_workout(self, date: datetime, sets: list[tuple]) -> None:
