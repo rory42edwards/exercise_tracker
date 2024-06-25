@@ -93,7 +93,7 @@ class ExerciseAnalyser:
             dates.append(date.date())
             load_volume: float = 0.0
             for pair in sets:
-                if pair[1] == 0:  # for now, if bodyweight,just make it one and then reps are still compared
+                if float(pair[1]) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
                     pair[1] = 1
                 load_volume += float(pair[1]) * float(pair[0])
             load_volumes.append(load_volume)
@@ -122,7 +122,7 @@ class ExerciseAnalyser:
             dates.append(date.isoformat())
             load_volume: float = 0.0
             for pair in sets:
-                if int(pair[1]) == 0:  # for now, if bodyweight,just make it one and then reps are still compared
+                if float(pair[1]) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
                     pair[1] = 1
                 load_volume += float(pair[1]) * float(pair[0])
             load_volumes.append(load_volume)
