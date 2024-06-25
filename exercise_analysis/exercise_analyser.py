@@ -69,12 +69,12 @@ class ExerciseAnalyser:
                                      '..', 'static', 'images')
         if not os.path.exists(static_folder):
             os.makedirs(static_folder)
-        filepath = os.path.join(static_folder, f"{movement.name}.png")
+        filepath = os.path.join(static_folder, f"{movement.name}_load.png")
         plt.savefig(filepath, format="png")
         plt.close()
         return filepath
 
-    def get_plot_data(self, movement: Movement) -> dict:
+    def get_load_data(self, movement: Movement) -> dict:
         dates = []
         highest_loads = []
         for date, sets in movement.all_sets.items():
@@ -84,6 +84,51 @@ class ExerciseAnalyser:
         return {
                 'labels': dates,
                 'values': highest_loads
+        }
+
+    def plot_load_volume_over_time(self, movement: Movement) -> Optional[str]:
+        dates = []
+        load_volumes = []
+        for date, sets in movement.all_sets.items():
+            dates.append(date.date())
+            load_volume: float = 0.0
+            for pair in sets:
+                if pair[1] == 0:  # for now, if bodyweight,just make it one and then reps are still compared
+                    pair[1] = 1
+                load_volume += float(pair[1]) * float(pair[0])
+            load_volumes.append(load_volume)
+        if len(dates) != len(load_volumes):
+            return None
+        plt.figure()
+        plt.scatter(dates, load_volumes, label=f"{movement.name} - Load-Volume")
+        plt.xlabel("Date")
+        plt.ylabel("Load-Volume / kg")
+        plt.title(f"Load-volume over time: {movement.name}")
+        plt.xticks(rotation=45)
+
+        static_folder = os.path.join(os.path.dirname(__file__),
+                                     '..', 'static', 'images')
+        if not os.path.exists(static_folder):
+            os.makedirs(static_folder)
+        filepath = os.path.join(static_folder, f"{movement.name}_load_volume.png")
+        plt.savefig(filepath, format="png")
+        plt.close()
+        return filepath
+
+    def get_load_volume_data(self, movement: Movement) -> dict:
+        dates = []
+        load_volumes = []
+        for date, sets in movement.all_sets.items():
+            dates.append(date.isoformat())
+            load_volume: float = 0.0
+            for pair in sets:
+                if int(pair[1]) == 0:  # for now, if bodyweight,just make it one and then reps are still compared
+                    pair[1] = 1
+                load_volume += float(pair[1]) * float(pair[0])
+            load_volumes.append(load_volume)
+        return {
+                'labels': dates,
+                'values': load_volumes
         }
 
     def get_movement(self, name: str) -> Union[Movement, None]:

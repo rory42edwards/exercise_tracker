@@ -35,8 +35,18 @@ const myChart = new Chart(ctx, {
   }
 });
 
-async function fetchExerciseData(exerciseName) {
-    const response = await fetch(`/api/exercise_data?name=${exerciseName}`);
+async function fetchExerciseLoadData(exerciseName) {
+    const response = await fetch(`/api/exercise_load?name=${exerciseName}`);
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch exercise data');
+    }
+    const data = await response.json();
+    return data;
+}
+
+async function fetchExerciseLoadVolumeData(exerciseName) {
+    const response = await fetch(`/api/exercise_load_volume?name=${exerciseName}`);
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to fetch exercise data');
@@ -51,10 +61,19 @@ function updateChart(data) {
     myChart.update();
 }
 
-document.querySelectorAll('.plot-button').forEach(button => {
+document.querySelectorAll('.plot-load-button').forEach(button => {
     button.addEventListener('click', async (event) => {
         const exerciseName = event.target.getAttribute('data-exercise');
-        const data = await fetchExerciseData(exerciseName);
+        const data = await fetchExerciseLoadData(exerciseName);
+        console.log('Fetched data: ', data);
+        updateChart(data);
+    });
+});
+
+document.querySelectorAll('.plot-load-volume-button').forEach(button => {
+    button.addEventListener('click', async (event) => {
+        const exerciseName = event.target.getAttribute('data-exercise');
+        const data = await fetchExerciseLoadVolumeData(exerciseName);
         console.log('Fetched data: ', data);
         updateChart(data);
     });

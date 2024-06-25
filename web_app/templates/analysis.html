@@ -29,13 +29,16 @@
               {% for movement in movements %}
               <li>
                 <div>
-                    <button id="plotbutton_{{ movement.name }}" class="plot-button" data-exercise="{{ movement.name }}">
-                        Plot {{ movement.name }}
+                    <button id="plotbutton_{{ movement.name }}" class="plot-load-button" data-exercise="{{ movement.name }}">
+                        Plot Load: {{ movement.name }}
+                    </button>
+                    <button id="plotbutton_{{ movement.name }}" class="plot-load-volume-button" data-exercise="{{ movement.name }}">
+                        Plot Load-Volume: {{ movement.name }}
                     </button>
                 </div>
               {% endfor %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
       </div>

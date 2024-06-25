@@ -11,8 +11,8 @@ def main() -> None:
     analyser.create_movements(tracker.workouts)
     # make plots for each movement
     for movement in analyser.movements:
-        print(movement)
         analyser.plot_load_over_time(movement)
+        analyser.plot_load_volume_over_time(movement)
 
     # plot_exercises_per_workout(workouts)
 

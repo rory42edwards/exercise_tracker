@@ -25,10 +25,23 @@ def before_request():
     load_analyser()
 
 
-# @bp.route('/plot_movement_load/<name>', methods=['POST'])
-# def plot_movement_load(name):
-@bp.route('/api/exercise_data/', methods=['GET'])
-def get_exercise_data():
+@bp.route('/api/exercise_load/', methods=['GET'])
+def get_exercise_load():
+    name = request.args.get('name')
+    if not name:
+        return jsonify({'error': 'Name parameter is required'}), 400
+    movement = g.analyser.get_movement(name)
+    if not movement:
+        return jsonify({'error': f"Movement: {name} not found!"}), 404
+    data = g.analyser.get_load_data(movement)
+    if data:
+        return jsonify(data)
+    else:
+        return jsonify({'error': "Failed to generate plot"}), 500
+
+
+@bp.route('/api/exercise_load_volume/', methods=['GET'])
+def get_exercise_load_volume():
     name = request.args.get('name')
     if not name:
         return jsonify({'error': 'Name parameter is required'}), 400
@@ -36,7 +49,7 @@ def get_exercise_data():
     if not movement:
         # return f"Movement: {name} not found!"
         return jsonify({'error': f"Movement: {name} not found!"}), 404
-    data = g.analyser.get_plot_data(movement)
+    data = g.analyser.get_load_volume_data(movement)
     if data:
         print(data)
         # return send_file(filepath, mimetype='image/png')
