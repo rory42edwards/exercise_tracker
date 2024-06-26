@@ -47,13 +47,9 @@ def get_exercise_load_volume():
         return jsonify({'error': 'Name parameter is required'}), 400
     movement = g.analyser.get_movement(name)
     if not movement:
-        # return f"Movement: {name} not found!"
         return jsonify({'error': f"Movement: {name} not found!"}), 404
     data = g.analyser.get_load_volume_data(movement)
     if data:
-        print(data)
-        # return send_file(filepath, mimetype='image/png')
         return jsonify(data)
     else:
         return jsonify({'error': "Failed to generate plot"}), 500
-        # return "Failed to generate plot", 500
