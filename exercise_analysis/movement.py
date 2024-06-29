@@ -1,4 +1,5 @@
 from datetime import datetime
+from exercise_tracker.set import Set
 
 
 class Movement:
@@ -11,7 +12,7 @@ class Movement:
         self.name = name.lower()
         self.all_sets: dict = {}
 
-    def add_workout(self, date: datetime, sets: list[tuple]) -> None:
+    def add_workout(self, date: datetime, sets: list['Set']) -> None:
         self.all_sets.update({date: sets})
 
     def __str__(self):

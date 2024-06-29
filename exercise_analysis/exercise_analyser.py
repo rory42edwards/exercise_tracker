@@ -1,5 +1,6 @@
 from exercise_analysis.movement import Movement
 from exercise_tracker.workout import Workout
+from exercise_tracker.set import Set
 from datetime import datetime
 from typing import Type, Union, Optional
 import matplotlib.pyplot as plt
@@ -53,8 +54,8 @@ class ExerciseAnalyser:
         for date, sets in movement.all_sets.items():
             dates.append(date.date())
             loads = []
-            for pair in sets:
-                loads.append(float(pair[1]))
+            for sett in sets:
+                loads.append(float(sett.load))
             highest_loads.append(max(loads))
         if len(dates) != len(highest_loads):
             return None
@@ -79,7 +80,7 @@ class ExerciseAnalyser:
         highest_loads = []
         for date, sets in movement.all_sets.items():
             dates.append(date.isoformat())
-            loads = [float(pair[1]) for pair in sets]
+            loads = [float(sett.load) for sett in sets]
             highest_loads.append(max(loads))
         return {
                 'labels': dates,
@@ -92,10 +93,10 @@ class ExerciseAnalyser:
         for date, sets in movement.all_sets.items():
             dates.append(date.date())
             load_volume: float = 0.0
-            for pair in sets:
-                if float(pair[1]) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
-                    pair[1] = 1
-                load_volume += float(pair[1]) * float(pair[0])
+            for sett in sets:
+                if float(sett.load) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
+                    sett.load = 1
+                load_volume += float(sett.reps) * float(sett.load)
             load_volumes.append(load_volume)
         if len(dates) != len(load_volumes):
             return None
@@ -121,10 +122,10 @@ class ExerciseAnalyser:
         for date, sets in movement.all_sets.items():
             dates.append(date.isoformat())
             load_volume: float = 0.0
-            for pair in sets:
-                if float(pair[1]) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
-                    pair[1] = 1
-                load_volume += float(pair[1]) * float(pair[0])
+            for sett in sets:
+                if float(sett.load) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
+                    sett.load = 1
+                load_volume += float(sett.reps) * float(sett.load)
             load_volumes.append(load_volume)
         return {
                 'labels': dates,
