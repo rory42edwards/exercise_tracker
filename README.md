@@ -28,9 +28,14 @@ A basic tracker/logger for my weight training
 ## Using the web application
 1. Follow steps 1-5 above.
 
-2. Start the web application by running the script:
+2. Further install required stuff using npm:
+    ```
+    npm install
+    ```
+
+3. Start the web application by running the script:
     ```
     ./run_web_app.sh
     ```
 
-3. Access the web app at `<address_to_computer>:8000`.
+4. Access the web app at `<address_to_computer>:8000`.
