@@ -1,5 +1,5 @@
 import { fetchExerciseLoadData, fetchExerciseLoadVolumeData } from './api.js';
-import { updateChart } from './dom.js';
+import { updateChart } from './mychart.js';
 
 document.querySelectorAll('.plot-load-button').forEach(button => {
     button.addEventListener('click', async (event) => {

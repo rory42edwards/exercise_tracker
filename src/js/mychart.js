@@ -7,7 +7,7 @@ Chart.register(...registerables);
 const canvasElement = document.getElementById('myChart');
 const ctx = canvasElement.getContext('2d');
 
-export const myChart = new Chart(ctx, {
+const myChart = new Chart(ctx, {
   type: 'scatter',
   data: {
     labels: [], // initialise with empty data
@@ -34,3 +34,9 @@ export const myChart = new Chart(ctx, {
     }
   }
 });
+
+export function updateChart(data) {
+    myChart.data.labels = data.labels;
+    myChart.data.datasets[0].data = data.values;
+    myChart.update();
+}
