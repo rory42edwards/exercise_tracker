@@ -16,14 +16,16 @@
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <div class="navbar-nav">
-                      <a class="nav-item nav-link" href="{{ url_for('main.index') }}">Tracker</a>
+                      <a class="nav-item nav-link" href="{{ url_for('main.trackerr') }}">Tracker</a>
                       <a class="nav-item nav-link active" href="{{ url_for('main.analysis') }}">Analysis</a>
+                      <a class="nav-item nav-link" href="{{ url_for('main.dbmodels') }}">Database Models</a>
                   </div>
               </div>
           </nav>
 
         <canvas id="myChart" width="400" height="200"></canvas>
 
+        <div id="analysisContainer">
           <h2>Movements</h2>
           <ul class="list-group">
               {% for movement in movements %}
@@ -37,6 +39,7 @@
                     </button>
                 </div>
               {% endfor %}
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

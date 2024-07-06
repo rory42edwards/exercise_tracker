@@ -17,3 +17,5 @@ analysis.ipynb
 flask_session/
 node_modules/
 web_app/static/js/
+var/
+include/

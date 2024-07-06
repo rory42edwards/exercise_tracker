@@ -2,6 +2,7 @@ from flask import Blueprint, g, request
 from flask.json import jsonify
 from exercise_analysis import analyser
 from exercise_tracker import tracker
+from web_app.models import Movement, Tag
 
 
 bp = Blueprint('analysis', __name__)
@@ -53,3 +54,23 @@ def get_exercise_load_volume():
         return jsonify(data)
     else:
         return jsonify({'error': "Failed to generate plot"}), 500
+
+
+@bp.route('/api/get_data', methods=['GET'])
+def get_data():
+    workouts = [workout.to_dict() for workout in g.tracker.workouts]
+    return jsonify(workouts)
+
+
+@bp.route('/api/get_movements', methods=['GET'])
+def get_movements():
+    movements = Movement.query.all()
+    result = [{'id': movement.id, 'name': movement.name} for movement in movements]
+    return jsonify(result), 200
+
+
+@bp.route('/api/get_tags', methods=['GET'])
+def get_tags():
+    tags = Tag.query.all()
+    result = [{'id': tag.id, 'name': tag.name} for tag in tags]
+    return jsonify(result), 200

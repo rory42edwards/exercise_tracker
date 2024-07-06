@@ -26,7 +26,7 @@ def before_request():
 
 
 @bp.route('/')
-def index():
+def trackerr():
     workouts = g.tracker.workouts_by_date()
     date = session.get('date')
     loaded = session.get('loaded', False)
@@ -43,12 +43,9 @@ def analysis():
                            movements=movements)
 
 
-@bp.route('/api/get_data', methods=['GET'])
-def get_data():
-    workouts = [workout.to_dict() for workout in g.tracker.workouts]
-    for workout in workouts:
-        print(workout)
-    return jsonify(workouts)
+@bp.route('/dbmodels')
+def dbmodels():
+    return render_template('dbmodels.html')
 
 
 @bp.route('/save', methods=['POST'])

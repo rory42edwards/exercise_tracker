@@ -6,7 +6,8 @@ module.exports = {
   entry: {
       main: './src/js/main.js',
       tracker: './src/js/tracker.js',
-      analysis: './src/js/analysis.js'
+      analysis: './src/js/analysis.js',
+      dbmodels: './src/js/dbmodels.js'
   },
   module: {
     rules: [
@@ -38,12 +39,17 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './web_app/templates/tracker.html',
             chunks: ['main', 'tracker'],  // Include specific bundles
-            filename: 'index.html'        // Output file name
+            filename: 'tracker.html'        // Output file name
         }),
         new HtmlWebpackPlugin({
             template: './web_app/templates/analysis.html',
             chunks: ['main', 'analysis'],    // Include specific bundles
             filename: 'analysis.html'     // Output file name
+        }),
+        new HtmlWebpackPlugin({
+            template: './web_app/templates/dbmodels.html',
+            chunks: ['main', 'dbmodels'],    // Include specific bundles
+            filename: 'dbmodels.html'     // Output file name
         })
     ],
     devServer: {
