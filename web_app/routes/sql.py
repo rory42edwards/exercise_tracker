@@ -8,7 +8,7 @@ bp = Blueprint('database', __name__)
 
 @bp.route('/add_movement', methods=['POST'])
 def add_movement():
-    name = request.form['name']
+    name = request.form['name'].lower().strip()
     if not name:
         return 'Name is required', 400
     movement = Movement(name=name)
@@ -40,7 +40,7 @@ def delete_movement():
 
 @bp.route('/add_tag', methods=['POST'])
 def add_tag():
-    name = request.form['name']
+    name = request.form['name'].lower().strip()
     if not name:
         return 'Name is required', 400
     tag = Tag(name=name)
