@@ -22,13 +22,13 @@ class ExerciseAnalyser:
             for exercise in workout.exercises:
                 # print(exercise)
                 if exercise.name not in exercise_names:
-                    exercise_names.append(exercise.name.strip())
-        movements = [Movement(name) for name in exercise_names]
+                    exercise_names.append(exercise.name.lower().strip())
+        movements = [Movement(name.strip()) for name in exercise_names]
 
         for movement in movements:
             for workout in workouts:
                 for exercise in workout.exercises:
-                    if exercise.name == movement.name:
+                    if exercise.name.strip() == movement.name.strip():
                         movement.add_workout(workout.date, exercise.sets)
             self.movements.append(movement)
 

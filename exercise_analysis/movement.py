@@ -10,7 +10,7 @@ class Movement:
     """
 
     def __init__(self, name: str):
-        self.name = name.lower()
+        self.name = name.lower().strip()
         self.all_sets: dict = {}
 
     def add_workout(self, date: datetime, sets: list['Set']) -> None:

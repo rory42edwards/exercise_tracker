@@ -4,7 +4,7 @@ from exercise_tracker.set import Set
 
 class Exercise:
     def __init__(self, name: str):
-        self.name = name.lower()
+        self.name = name.lower().strip()
         self.sets: list[Set] = []
 
     def add_set(self, reps: int, load: float) -> None:
