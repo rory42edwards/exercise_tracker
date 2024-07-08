@@ -1,5 +1,6 @@
 from datetime import datetime
 from exercise_tracker.set import Set
+import json
 
 
 class Movement:
@@ -13,7 +14,16 @@ class Movement:
         self.all_sets: dict = {}
 
     def add_workout(self, date: datetime, sets: list['Set']) -> None:
-        self.all_sets.update({date: sets})
+        self.all_sets.update({date.isoformat(): sets})
 
     def __str__(self):
         return f'{self.name}: {self.all_sets}'
+
+    def to_dict(self) -> dict:
+        all_sets_dict: dict = {}
+        for items in self.all_sets.items():
+            all_sets_dict.update({items[0]:
+                                 [sett.to_dict() for sett in items[1]]})
+        return {'name': self.name,
+                'all sets': all_sets_dict
+                }

@@ -38,14 +38,16 @@ def trackerr():
 
 @bp.route('/analysis')
 def analysis():
-    movements = g.analyser.movements
+    movements = [movement.to_dict() for movement in g.analyser.movements]
     return render_template('analysis.html',
-                           movements=movements)
+                           python_movements=movements)
 
 
 @bp.route('/dbmodels')
 def dbmodels():
-    return render_template('dbmodels.html')
+    movements = [movement.to_dict() for movement in g.analyser.movements]
+    return render_template('dbmodels.html',
+                           python_movements=movements)
 
 
 @bp.route('/save', methods=['POST'])

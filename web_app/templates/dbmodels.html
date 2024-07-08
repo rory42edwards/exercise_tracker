@@ -7,6 +7,9 @@
     <title>Exercise Tracker</title>
   </head>
   <body>
+      <script>
+          window.pythonMovements = {{ python_movements | tojson }};
+      </script>
     <div class="container">
       <h1 class="mt-5">Exercise Tracker</h1>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -57,9 +60,23 @@
             <input type="submit" value="Add Movement Tag">
         </form>
 
-        <form id="getMovementsForm">
-            <button type="submit" id="getMovementsButton">Get Movements</button>
-        </form>
+      </div>
+
+      <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingMovementTable" aria-expanded="false" aria-constrols="collapsingMovementTable">
+          Show past movements/database movements
+      </button>`
+      <div class="collapse mt-2" id="collapsingMovementTable">
+          <div class="card card-body" id="databaseContainer">
+              <table id="databaseTable" class="table table-hover">
+                  <thead>
+                      <th> Movements from tracker </th>
+                      <th> Movements from SQL database </th>
+                  </thead>
+                  <tbody>
+                      <tr id="topTableRow" class="align-top">
+                  </tbody>
+              </table>
+          </div>
       </div>
 
 

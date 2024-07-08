@@ -18,3 +18,21 @@ document.querySelectorAll('.plot-load-volume-button').forEach(button => {
         updateChart(data);
     });
 });
+
+const pythonMovements = window.pythonMovements;
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/get_movements')
+        .then(response => response.json())
+        .then(movementData => {
+            const mergedData = pythonMovements.map(pm => {
+                const match = movementData.find(md => md.id === pm.id);
+                return {
+                    ...pm,
+                    tags: match ? match.tags : {}
+                };
+            });
+
+            console.log(mergedData);
+        });
+});

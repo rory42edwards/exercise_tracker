@@ -14,13 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // populate movement dropdowns
-    populateDropdown('/api/get_movements', 'deleteMovementId');
-    populateDropdown('/api/get_movements', 'addMovementTagMovementId');
+    function populateDropdowns() {
+        // populate movement dropdowns
+        populateDropdown('/api/get_movements', 'deleteMovementId');
+        populateDropdown('/api/get_movements', 'addMovementTagMovementId');
 
-    // populate tag dropdowns
-    populateDropdown('/api/get_tags', 'deleteTagId');
-    populateDropdown('/api/get_tags', 'addMovementTagTagId');
+        // populate tag dropdowns
+        populateDropdown('/api/get_tags', 'deleteTagId');
+        populateDropdown('/api/get_tags', 'addMovementTagTagId');
+    }
+
+    populateDropdowns();
 
     document.getElementById('addMovementForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -28,7 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('/add_movement', {
             method: 'POST',
             body: formData
-        }).then(response => response.text()).then(data => alert(data));
+        //}).then(response => response.text()).then(data => alert(data));
+        }).then(response => response.text()).then(data => data);
+        main();
+        populateDropdowns();
     });
 
     document.getElementById('deleteMovementForm').addEventListener('submit', function(event) {
@@ -40,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ movement_id: movementId }),
-        }).then(response => response.text()).then(data => alert(data));
+        }).then(response => response.text()).then(data => data);
+        main();
+        populateDropdowns();
     });
 
     document.getElementById('addTagForm').addEventListener('submit', function(event) {
@@ -49,7 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('/add_tag', {
             method: 'POST',
             body: formData
-        }).then(response => response.text()).then(data => alert(data));
+        }).then(response => response.text()).then(data => data);
+        main();
+        populateDropdowns();
     });
 
     document.getElementById('deleteTagForm').addEventListener('submit', function(event) {
@@ -61,7 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ tag_id: tagId }),
-        }).then(response => response.text()).then(data => alert(data));
+        }).then(response => response.text()).then(data => data);
+        main();
+        populateDropdowns();
     });
 
     document.getElementById('addMovementTagForm').addEventListener('submit', function(event) {
@@ -88,13 +101,73 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Failed to add Movement Tag');
             }
         });
+        main();
+        populateDropdowns();
     });
 
 
-    document.getElementById('getMovementsButton').addEventListener('click', (event)=> {
-        event.preventDefault();
-        fetch('/get_movements', {
-            method: 'GET'
-        }).then(response => response.text()).then(data => alert(data));
-    });
 });
+
+async function printMovementTable(movements) {
+    // make movements alphabetical
+    movements.sort((a, b) => a.name.localeCompare(b.name));
+
+    //const tableContainer = document.getElementById("databaseTable");
+    //const tableContainer = document.getElementById("databaseContainer");
+    const topTableRow = document.getElementById('topTableRow');
+    const topTableData = document.createElement('td');
+    const tableElement = document.createElement('table');
+    tableElement.classList.add('table', 'table-hover');
+    
+    // create table header
+    header = document.createElement('thead');
+    headerRow = document.createElement('tr');
+    headerTitle = document.createElement('th');
+    headerTitle.innerHTML = `<strong>Movement<strong>`;
+    headerRow.appendChild(headerTitle);
+    header.appendChild(headerRow);
+    tableElement.appendChild(header);
+
+    // create and populate table body
+    const body = document.createElement('tbody');
+    movements.forEach(movement => {
+        const movementRow = document.createElement('tr');
+        const movementName = document.createElement('td');
+        movementName.innerHTML = `${movement.name}`;
+        movementRow.appendChild(movementName);
+        body.appendChild(movementRow);
+    });
+
+    tableElement.appendChild(body);
+    //tableContainer.appendChild(tableElement);
+    topTableData.appendChild(tableElement);
+    topTableRow.appendChild(topTableData);
+}
+
+
+async function fetchMovements() {
+    let sqlMovements = [];
+    const response = await fetch('/api/get_movements');
+    const data = await response.json();
+        data.forEach(item => {
+            movementName = item.name;
+            let movementObject = {
+                "name": movementName
+            };
+            sqlMovements.push(movementObject);
+        });
+    return sqlMovements;
+}
+
+async function main() {
+    const pythonMovements = window.pythonMovements;
+    let sqlMovements = await fetchMovements();
+    const topTableRow = document.getElementById('topTableRow');
+    topTableRow.innerHTML = ``;
+    console.log(pythonMovements);
+    console.log(sqlMovements);
+    printMovementTable(pythonMovements);
+    printMovementTable(sqlMovements);
+}
+
+main();

@@ -7,6 +7,9 @@
         <title>Exercise Tracker</title>
     </head>
   <body>
+        <script>
+            window.pythonMovements = {{ python_movements | tojson }};
+        </script>
       <div class="container">
         <h1 class="mt-5">Exercise Tracker</h1>
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,7 +31,7 @@
         <div id="analysisContainer">
           <h2>Movements</h2>
           <ul class="list-group">
-              {% for movement in movements %}
+              {% for movement in python_movements %}
               <li>
                 <div>
                     <button id="plotbutton_{{ movement.name }}" class="plot-load-button" data-exercise="{{ movement.name }}">
