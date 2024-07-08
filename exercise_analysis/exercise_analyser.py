@@ -16,13 +16,13 @@ class ExerciseAnalyser:
         # make sure self.movements is empty
         self.movements.clear()
         # create unique list of exercise names
-        exercise_names = []
+        exercise_names: list[str] = []
         for workout in workouts:
             # print(workout)
             for exercise in workout.exercises:
                 # print(exercise)
                 if exercise.name not in exercise_names:
-                    exercise_names.append(exercise.name)
+                    exercise_names.append(exercise.name.strip())
         movements = [Movement(name) for name in exercise_names]
 
         for movement in movements:

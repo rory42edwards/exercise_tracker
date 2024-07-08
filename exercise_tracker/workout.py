@@ -27,7 +27,7 @@ class Workout:
                 self.exercise_names.remove(index_name)
 
     def add_exercise(self, name: str) -> None:
-        exercise = Exercise(name)
+        exercise = Exercise(name.strip())
         self.exercises.append(exercise)
         length = len(self.exercise_names)
         if name not in self.exercise_names:
