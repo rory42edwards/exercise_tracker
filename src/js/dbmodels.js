@@ -92,13 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ movement_id: movementId, tag_id: tagId, value }),
         })
         .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Movement Tag added successfully');
-            } else {
-                alert('Failed to add Movement Tag');
-            }
-        });
+        .then(data => data);
         main();
         populateDropdowns();
     });
