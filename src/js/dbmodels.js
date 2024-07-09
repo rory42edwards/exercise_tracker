@@ -97,6 +97,26 @@ document.addEventListener('DOMContentLoaded', function() {
         populateDropdowns();
     });
 
+    document.getElementById('deleteMovementTagForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const movementId = document.getElementById('addMovementTagMovementId').value;
+        const tagId = document.getElementById('addMovementTagTagId').value;
+        const value = document.getElementById('value').value;
+
+        fetch('/delete_movement_tag', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ movement_id: movementId, tag_id: tagId, value }),
+        })
+        .then(response => response.json())
+        .then(data => data);
+        main();
+        populateDropdowns();
+    });
+
     async function printMovementTable(movements) {
         // make movements alphabetical
         movements.sort((a, b) => a.name.localeCompare(b.name));

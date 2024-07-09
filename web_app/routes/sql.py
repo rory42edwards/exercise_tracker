@@ -25,7 +25,6 @@ def add_movement():
 def delete_movement():
     try:
         data = request.get_json()
-        print(data)
         movement_id = data.get('movement_id')
         if not movement_id:
             return 'Movement ID is required', 400
@@ -73,7 +72,6 @@ def delete_tag():
 def add_movement_tag():
     try:
         data = request.get_json()
-        print(data)
         movement_id = data.get('movement_id')
         tag_id = data.get('tag_id')
         value = data.get('value')
@@ -94,18 +92,17 @@ def add_movement_tag():
 def delete_movement_tag():
     try:
         data = request.get_json()
-        print(data)
         movement_id = data.get('movement_id')
         tag_id = data.get('tag_id')
-        value = data.get('value')
-        if not movement_id or not tag_id or not value:
-            return jsonify({'success': False, 'message': 'Movement ID, Tag ID, and Value are required'}), 400
-        movement_tag = MovementTag(movement_id=movement_id,
-                                   tag_id=tag_id,
-                                   value=value)
-        db.session.add(movement_tag)
+        if not movement_id or not tag_id:
+            return jsonify({'success': False, 'message': 'Movement ID and Tag ID are required'}), 400
+        movement_tag = MovementTag.query.filter_by(movement_id=movement_id,
+                                                   tag_id=tag_id).first()
+        if not movement_tag:
+            return jsonify({'success': False, 'message': 'MovementTag not found'}), 404
+        db.session.delete(movement_tag)
         db.session.commit()
-        return jsonify({'success': True, 'message': 'Movement tag added'}), 200
+        return jsonify({'success': True, 'message': 'Movement tag deleted'}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
