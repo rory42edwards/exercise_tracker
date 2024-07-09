@@ -62,8 +62,14 @@
 
       </div>
 
-      <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingMovementTable" aria-expanded="false" aria-constrols="collapsingMovementTable">
+      <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingMovementTable" aria-expanded="false" aria-controls="collapsingMovementTable">
           Show past movements/database movements
+      </button>`
+      <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingTagTable" aria-expanded="false" aria-controls="collapsingTagTable">
+          Show all tags 
+      </button>`
+      <button class="btn btn-secondary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingMovementTagTable" aria-expanded="false" aria-controls="collapsingMovementTagTable">
+          Show all movement tags 
       </button>`
       <div class="collapse mt-2" id="collapsingMovementTable">
           <div class="card card-body" id="databaseContainer">
@@ -79,6 +85,24 @@
           </div>
       </div>
 
+      <div class="collapse mt-2" id="collapsingTagTable">
+          <div class="card card-body" id="databaseTagsContainer">
+              <table id="databaseTagsTable" class="table table-hover">
+                  <thead>
+                      <th> Tags from SQL database </th>
+                  </thead>
+                  <tbody>
+                      <tr id="topTagsTableRow" class="align-top">
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+      <div class="collapse mt-2" id="collapsingMovementTagTable">
+          <div class="card card-body" id="databaseMovementTagsContainer">
+              <table id="databaseMovementTagsTable" class="table table-hover"></table>
+          </div>
+      </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/main.bundle.js') }}"></script>

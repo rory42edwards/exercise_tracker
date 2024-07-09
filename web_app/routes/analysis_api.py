@@ -74,3 +74,19 @@ def get_tags():
     tags = Tag.query.all()
     result = [{'id': tag.id, 'name': tag.name} for tag in tags]
     return jsonify(result), 200
+
+
+@bp.route('/api/get_combined_data', methods=['GET'])
+def get_combined_data():
+    movements = Movement.query.all()
+
+    results = []
+    for movement in movements:
+        tags_dict = {mt.tag.name: mt.value for mt in movement.movement_tags}
+        results.append({
+            'id': movement.id,
+            'name': movement.name,
+            'tags': tags_dict
+        })
+
+    return jsonify(results), 200
