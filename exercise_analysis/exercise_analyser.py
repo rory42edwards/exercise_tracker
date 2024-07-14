@@ -79,7 +79,7 @@ class ExerciseAnalyser:
         dates = []
         highest_loads = []
         for date, sets in movement.all_sets.items():
-            dates.append(date.isoformat())
+            dates.append(date)
             loads = [float(sett.load) for sett in sets]
             highest_loads.append(max(loads))
         return {
@@ -120,7 +120,7 @@ class ExerciseAnalyser:
         dates = []
         load_volumes = []
         for date, sets in movement.all_sets.items():
-            dates.append(date.isoformat())
+            dates.append(date)
             load_volume: float = 0.0
             for sett in sets:
                 if float(sett.load) == 0.0:  # for now, if bodyweight,just make it one and then reps are still compared
