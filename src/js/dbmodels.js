@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //const tableContainer = document.getElementById("databaseTable");
         //const tableContainer = document.getElementById("databaseContainer");
         const topTableRow = document.getElementById('topTableRow');
+        topTableRow.innerHTML = '';
         const topTableData = document.createElement('td');
         const tableElement = document.createElement('table');
         let tableStr = "table1";
@@ -164,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tags.sort((a, b) => a.name.localeCompare(b.name));
 
         const topTableRow = document.getElementById('topTagsTableRow');
+        topTableRow.innerHTML = '';
         const topTableData = document.createElement('td');
         const tableElement = document.createElement('table');
         tableElement.classList.add('table', 'table-hover');
