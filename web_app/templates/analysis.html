@@ -26,22 +26,10 @@
               </div>
           </nav>
 
-        <canvas id="myChart" width="400" height="200"></canvas>
+          <!--<canvas id="myChart" width="400" height="200"></canvas>-->
 
         <div id="analysisContainer">
-          <h2>Movements</h2>
-          <ul class="list-group">
-              {% for movement in python_movements %}
-              <li>
-                <div>
-                    <button id="plotbutton_{{ movement.name }}" class="plot-load-button" data-exercise="{{ movement.name }}">
-                        Plot Load: {{ movement.name }}
-                    </button>
-                    <button id="plotbutton_{{ movement.name }}" class="plot-load-volume-button" data-exercise="{{ movement.name }}">
-                        Plot Load-Volume: {{ movement.name }}
-                    </button>
-                </div>
-              {% endfor %}
+            <h2>Analysis</h2>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

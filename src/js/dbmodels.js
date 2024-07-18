@@ -126,6 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const topTableRow = document.getElementById('topTableRow');
         const topTableData = document.createElement('td');
         const tableElement = document.createElement('table');
+        let tableStr = "table1";
+        elementCheck = document.getElementById(tableStr);
+        if (elementCheck)
+            tableStr = "table2";
+        tableElement.setAttribute('id', tableStr);
         tableElement.classList.add('table', 'table-hover');
         
         // create table header
@@ -150,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tableElement.appendChild(body);
         //tableContainer.appendChild(tableElement);
         topTableData.appendChild(tableElement);
+        new DataTable(`#${tableStr}`);
         topTableRow.appendChild(topTableData);
     }
 
@@ -184,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tableElement.appendChild(body);
         topTableData.appendChild(tableElement);
         topTableRow.appendChild(topTableData);
+        new DataTable('#databaseTagsTable');
     }
 
     async function printMovementTagTable(movementTags) {
@@ -197,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // create table
         const table = document.getElementById('databaseMovementTagsTable');
         table.innerHTML = ``;
-        table.border = '1';
+        //table.border = '1';
 
         const header = document.createElement('thead');
         const headerRow = document.createElement('tr');
@@ -229,6 +236,10 @@ document.addEventListener('DOMContentLoaded', function() {
             body.appendChild(row);
         });
         table.appendChild(body);
+        new DataTable('#databaseMovementTagsTable');
+        /*$(document).ready(function() {
+            $('#databaseMovementTagsTable').DataTable;
+        });*/
     }
 
     async function fetchDbDataNames(url) {

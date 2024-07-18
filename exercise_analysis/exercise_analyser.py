@@ -137,3 +137,46 @@ class ExerciseAnalyser:
             if movement.name.lower() == name.lower():
                 return movement
         return None
+
+    def get_prog_overload(slef, movement: Movement) -> dict:
+        """
+        Returns information about changes in maximum load,
+        or if that's the same, changes in reps of a movement, over time
+        """
+        dates: list[str] = []
+        all_set_load_volumes: list[tuple] = []
+        for date, sets in movement.all_sets.items():
+            dates.append(date)
+            loads: list[float] = []
+            total_reps: int = 0
+            for sett in sets:
+                loads.append(sett[1])
+                total_reps += sett[0]
+            highest_load: float = max(loads)
+            all_set_load_volumes.append((total_reps, highest_load))
+        overloads: list[int] = []
+        for i in range(len(all_set_load_volumes)):
+            if i == 0:
+                overloads.append(0)
+                continue
+            # check if load is bigger than previous one
+            if all_set_load_volumes[i][1] > all_set_load_volumes[i-1][1]:
+                overloads.append(overloads[-1]+1)
+                continue
+            if all_set_load_volumes[i][1] < all_set_load_volumes[i-1][1]:
+                overloads.append(overloads[-1]-1)
+                continue
+            # if load is the same, check if reps increased or decreased
+            if all_set_load_volumes[i][0] > all_set_load_volumes[i-1][0]:
+                overloads.append(overloads[-1]+1)
+                continue
+            if all_set_load_volumes[i][0] < all_set_load_volumes[i-1][0]:
+                overloads.append(overloads[-1]-1)
+                continue
+            # if none of the conditions above are met, no change
+            # (ie same reps and load == no overloading or underloading)
+            overloads.append(overloads[-1])
+        return {
+                'labels': dates,
+                'values': overloads
+        }
