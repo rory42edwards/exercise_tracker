@@ -65,7 +65,8 @@ def get_data():
 @bp.route('/api/get_movements', methods=['GET'])
 def get_movements():
     movements = Movement.query.all()
-    result = [{'id': movement.id, 'name': movement.name} for movement in movements]
+    result = [{'id': movement.id, 'name': movement.name}
+              for movement in movements]
     return jsonify(result), 200
 
 
@@ -90,3 +91,21 @@ def get_combined_data():
         })
 
     return jsonify(results), 200
+
+
+@bp.route('/api/get_prog_overload', methods=['GET'])
+def get_exercise_prog_overload():
+    """
+    Gets information about progressive overload of an exercise in reps or load
+    """
+    name = request.args.get('name')
+    if not name:
+        return jsonify({'error': 'Name parameter is required'}), 400
+    movement = g.analyser.get_movement(name)
+    if not movement:
+        return jsonify({'error': f"Movement: {name} not found!"}), 404
+    data = g.analyser.get_prog_overload(movement)
+    if data:
+        return jsonify(data)
+    else:
+        return jsonify({'error': "Failed to generate plot"}), 500

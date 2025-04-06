@@ -1,13 +1,11 @@
-import { renderWorkouts, loadState, saveState } from './trackerDOM.js';
-
-class Set {
+export class Set {
     constructor (reps, load) {
         this.reps = parseInt(reps);
         this.load = parseFloat(load);
     }
 }
 
-class Exercise {
+export class Exercise {
     constructor (name) {
         this.name = name.toLowerCase();
         this.sets = []
@@ -19,7 +17,7 @@ class Exercise {
     }
 }
 
-class Workout {
+export class Workout {
     constructor (date) {
         this.date = date
         this.exercises = []
@@ -40,6 +38,21 @@ class Workout {
         if (index !==-1) {
             this.exercises.splice(index, 1);
         }
+    }
+
+    loadExercises (data) {
+        if (!Array.isArray(data)) {
+            throw new Error('Data must be an array');
+        }
+        this.exercises = data.map(exerciseData => {
+            const exercise = new Exercise(exerciseData.name);
+            exercise.sets = exerciseData.sets.map(setData => new Set(setData.reps, setData.load));
+            return exercise;
+        });
+    }
+
+    hasDate (date) {
+        if (this.date === date) return true;
     }
 }
 
@@ -98,36 +111,11 @@ export class Tracker {
         sortedWorkouts.reverse();
         return sortedWorkouts;
     }
-}
 
-async function fetchData() {
-    try {
-        const response = await fetch('/api/get_data');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-            console.error('Problem with fetch operation: ', error);
-        }
-}
-
-async function init() {
-    const data = await fetchData();
-    if (data) {
-        const tracker = new Tracker();
-        tracker.loadWorkouts(data);
-        renderWorkouts(tracker);
-        saveState(tracker);
+    hasDate (date) {
+        this.workouts.forEach( workout => {
+            if (workout.hasDate(date)) return true;
+        });
+        return false;
     }
 }
-
-window.onload = () => {
-    const tracker = loadState();
-    if (tracker) {
-        renderWorkouts(tracker);
-    } else {
-        init();
-    }
-};

@@ -1,29 +1,33 @@
-import { Tracker } from './tracker.js';
+import { Tracker, Workout } from '../modules/classes.js';
 
-let trackerState = null;
+let workoutState = null;
 
-export function saveState(tracker) {
-    localStorage.setItem('trackerState', JSON.stringify(tracker.workouts));
+/*
+export function saveWorkoutState(tracker) {
+    console.log(JSON.stringify(tracker.workouts));
+    localStorage.setItem('workoutState', JSON.stringify(tracker.workouts));
 }
 
-export function loadState() {
-    const savedState = localStorage.getItem('trackerState');
+export function loadWorkoutState() {
+    const savedState = localStorage.getItem('workoutState');
     if (savedState) {
-        trackerState = new Tracker();
-        trackerState.loadWorkouts(JSON.parse(savedState));
-        renderWorkouts(trackerState);
-        return trackerState;
+        workoutState = new Tracker();
+        workoutState.loadWorkouts(JSON.parse(savedState));
+        const workoutDate = workoutState.workouts[0].date;
+        renderAddWorkoutForm(workoutState, workoutDate);
+        return workoutState;
     }
     return null;
 }
+*/
 
-export function renderWorkouts(tracker) {
-    const container = document.getElementById('workoutsContainer');
+/*
+export function renderAddWorkoutForm(tracker, date) {
+    const container = document.getElementById('workoutFormContainer');
     container.innerHTML = '';
-    const sortedWorkouts = tracker.workoutsByDate();
 
     const header = document.createElement('h2');
-    header.innerHTML = `Workouts`;
+    header.innerHTML = `Add Workout`;
     container.appendChild(header);
 
     // create and add a save button
@@ -51,28 +55,24 @@ export function renderWorkouts(tracker) {
     addWorkoutElement.appendChild(addWorkoutButton);
     container.appendChild(addWorkoutElement);
 
-    const workoutList = document.createElement('ul');
-    workoutList.classList.add('list-group');
-    sortedWorkouts.forEach(workout => {
-        //const workoutElement = document.createElement('div');
+    const workout = new Workout(date);
+    if (tracker.hasDate(date)) {
+        workout = tracker.getWorkout(date);
+    }
+    //const workoutList = document.createElement('ul');
+    //workoutList.classList.add('list-group');
+    //sortedWorkouts.forEach(workout => {
         const workoutElement = document.createElement('li');
         workoutElement.classList.add('list-group-item');
-        if (workout.date.length > 11) {
-            const date = workout.date.slice(0, -9);
-            workoutElement.innerHTML = `<strong>${date}</strong>`;
+        if (workout.date) {
+            if (workout.date.length > 11) {
+                const date = workout.date.slice(0, -9);
+                workoutElement.innerHTML = `<strong>${date}</strong>`;
+            }
+            else {
+                workoutElement.innerHTML = `<strong>${workout.date}</strong>`;
+            }
         }
-        else {
-            workoutElement.innerHTML = `<strong>${workout.date}</strong>`;
-        }
-
-        // create and add a delete workout button
-        const removeWorkoutElement = document.createElement('div');
-        const removeWorkoutButton = document.createElement('button');
-        removeWorkoutButton.classList.add('btn', 'btn-danger', 'removeWorkoutButton', 'mb-2');
-        removeWorkoutButton.setAttribute('data-date', workout.date);
-        removeWorkoutButton.innerText = 'Remove workout';
-        removeWorkoutElement.appendChild(removeWorkoutButton);
-        workoutElement.appendChild(removeWorkoutElement);
 
         // create and add an add exercise button
         const addExerciseElement = document.createElement('div');
@@ -90,9 +90,9 @@ export function renderWorkouts(tracker) {
         addExerciseElement.appendChild(addExerciseButton);
         workoutElement.appendChild(addExerciseElement);
 
-        //container.appendChild(workoutElement);
-        workoutList.appendChild(workoutElement);
-        container.appendChild(workoutList);
+        //workoutList.appendChild(workoutElement);
+        //container.appendChild(workoutList);
+        container.appendChild(workoutElement);
 
         workout.exercises.slice().reverse().forEach(exercise => {
             const exerciseElement = document.createElement('div');
@@ -141,7 +141,7 @@ export function renderWorkouts(tracker) {
             addSetElement.appendChild(addSetButton);
             exerciseElement.appendChild(addSetElement);
         });
-    });
+    //});
 
     // Reattach event listeners after rendering
     document.getElementById('addWorkoutButton').addEventListener('click', () => {
@@ -149,8 +149,8 @@ export function renderWorkouts(tracker) {
         const date = document.getElementById('workoutDate').value;
         if (date){
             tracker.addWorkout(date);
-            renderWorkouts(tracker);
-            saveState(tracker);
+            renderAddWorkoutForm(tracker, date);
+            saveWorkoutState(tracker);
         }
     });
 
@@ -163,8 +163,8 @@ export function renderWorkouts(tracker) {
             if (exerciseName) {
                 const workout = tracker.getWorkout(date)
                 workout.addExercise(exerciseName);
-                renderWorkouts(tracker);
-                saveState(tracker);
+                renderAddWorkoutForm(tracker, date);
+                saveWorkoutState(tracker);
             }
         });
     });
@@ -184,8 +184,8 @@ export function renderWorkouts(tracker) {
                 const workout = tracker.getWorkout(date);
                 const exercise = workout.getExercise(exerciseName);
                 exercise.addSet(reps, load);
-                renderWorkouts(tracker);
-                saveState(tracker);
+                renderAddWorkoutForm(tracker, date);
+                saveWorkoutState(tracker);
             }
         });
     });
@@ -216,18 +216,10 @@ export function renderWorkouts(tracker) {
             const name = event.target.getAttribute('data-exercise-name');
             const workout = tracker.getWorkout(date);
             workout.removeExercise(name);
-            renderWorkouts(tracker);
-            saveState(tracker);
+            renderAddWorkoutForm(tracker, date);
+            saveWorkoutState(tracker);
         });
     });
 
-    document.querySelectorAll('.removeWorkoutButton').forEach(button => {
-        button.addEventListener('click', (event) => {
-            console.log("trying to remove workout");
-            const date = event.target.getAttribute('data-date');
-            tracker.removeWorkout(date);
-            renderWorkouts(tracker);
-            saveState(tracker);
-        });
-    });
 }
+*/

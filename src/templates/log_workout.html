@@ -16,18 +16,18 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <div class="navbar-nav">
-                  <a class="nav-item nav-link active" href="{{ url_for('main.trackerr') }}">Tracker</a>
+                  <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+                  <a class="nav-item nav-link active" href="{{ url_for('main.log_workout') }}">Log Workout</a>
+                  <a class="nav-item nav-link" href="{{ url_for('main.history') }}">Workout History</a>
                   <a class="nav-item nav-link" href="{{ url_for('main.analysis') }}">Analysis</a>
                   <a class="nav-item nav-link" href="{{ url_for('main.dbmodels') }}">Database Models</a>
               </div>
           </div>
       </nav>
       
-      <div id="workoutsContainer">
+      <div id="workoutFormContainer">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/main.bundle.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/tracker.bundle.js') }}"></script>
 
   </body>
 </html>

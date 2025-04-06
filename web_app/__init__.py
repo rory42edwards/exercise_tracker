@@ -10,7 +10,7 @@ def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='static')
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SECRET_KEY'] = 'bj69420'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movements.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///workouts.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     Session(app)
@@ -18,13 +18,14 @@ def create_app():
 
     with app.app_context():
         from .routes import main, exercises, workouts, analysis_api, sql
-        from .models import Movement, Tag, MovementTag
+        from .models import Movement, Tag, MovementTag, Workout
 
         app.register_blueprint(main.bp)
         app.register_blueprint(exercises.bp)
         app.register_blueprint(workouts.bp)
         app.register_blueprint(analysis_api.bp)
         app.register_blueprint(sql.bp)
+        # app.register_blueprint(workout.bp)
 
         db.create_all()
 

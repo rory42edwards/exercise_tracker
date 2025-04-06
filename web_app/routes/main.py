@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, g, jsonify, request
 from exercise_tracker import tracker
 from exercise_tracker.workout import Workout
+from exercise_tracker.exercise import Exercise
 from exercise_analysis import analyser
 
 
@@ -26,14 +27,26 @@ def before_request():
 
 
 @bp.route('/')
-def trackerr():
+def home():
+    return render_template('home.html')
+
+
+@bp.route('/history')
+def history():
     workouts = g.tracker.workouts_by_date()
     date = session.get('date')
     loaded = session.get('loaded', False)
-    return render_template('tracker.html',
+    # workouts = get_all_workouts()
+    # return render_template('history.html', workouts=workouts)
+    return render_template('history.html',
                            date=date,
                            workouts=workouts,
                            loaded=loaded)
+
+
+@bp.route('/log_workout')
+def log_workout():
+    return render_template('log_workout.html')
 
 
 @bp.route('/analysis')
@@ -50,8 +63,8 @@ def dbmodels():
                            python_movements=movements)
 
 
-@bp.route('/save', methods=['POST'])
-def save_data():
+@bp.route('/save_tracker', methods=['POST'])
+def save_tracker():
     data = request.get_json()
     if data is None:
         raise ValueError("No data received or invalid JSON")
@@ -60,5 +73,19 @@ def save_data():
         [Workout.from_dict(data_entry) for data_entry in data]
     for workout in g.tracker.workouts:
         print(workout)
+    g.tracker.save_to_file('data/workouts.json')
+    return jsonify({'success': True})
+
+
+@bp.route('/save_workout', methods=['POST'])
+def save_workout():
+    data = request.get_json()
+    if data is None:
+        raise ValueError("No data received or invalid JSON")
+    date_str = data['date']
+    workout = Workout(date_str)
+    workout.exercises = [Exercise.from_dict(data_entry) for data_entry in data['exercises']]
+    g.tracker.workouts.append(workout)
+    print(f"saving workout: {workout} to file")
     g.tracker.save_to_file('data/workouts.json')
     return jsonify({'success': True})

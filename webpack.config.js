@@ -5,7 +5,8 @@ module.exports = {
   mode: 'development',
   entry: {
       main: './src/js/main.js',
-      tracker: './src/js/tracker.js',
+      logWorkout: './src/js/pages/logWorkout.js',
+      history: './src/js/pages/tracker.js',
       analysis: './src/js/analysis.js',
       dbmodels: './src/js/dbmodels.js'
   },
@@ -37,19 +38,29 @@ module.exports = {
   },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './web_app/templates/tracker.html',
-            chunks: ['main', 'tracker'],  // Include specific bundles
-            filename: 'tracker.html'        // Output file name
+            template: './src/templates/home.html',
+            chunks: ['main'],  // Include specific bundles
+            filename: '../../templates/home.html'        // Output file name
         }),
         new HtmlWebpackPlugin({
-            template: './web_app/templates/analysis.html',
+            template: './src/templates/log_workout.html',
+            chunks: ['main', 'logWorkout'],  // Include specific bundles
+            filename: '../../templates/log_workout.html'        // Output file name
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/templates/history.html',
+            chunks: ['main', 'history'],  // Include specific bundles
+            filename: '../../templates/history.html'        // Output file name
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/templates/analysis.html',
             chunks: ['main', 'analysis'],    // Include specific bundles
-            filename: 'analysis.html'     // Output file name
+            filename: '../../templates/analysis.html'     // Output file name
         }),
         new HtmlWebpackPlugin({
-            template: './web_app/templates/dbmodels.html',
+            template: './src/templates/dbmodels.html',
             chunks: ['main', 'dbmodels'],    // Include specific bundles
-            filename: 'dbmodels.html'     // Output file name
+            filename: '../../templates/dbmodels.html'     // Output file name
         })
     ],
     devServer: {
