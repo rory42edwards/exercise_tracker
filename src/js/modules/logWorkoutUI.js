@@ -15,6 +15,24 @@ export function renderAddWorkoutForm(workout) {
     saveElement.appendChild(saveButton);
     container.appendChild(saveElement);
 
+    // create and add a title/date section
+    const newWorkoutElement = document.createElement('div');
+    newWorkoutElement.classList.add('mt-3');
+    // create and add an input title button
+    const titleInputElement = document.createElement('div');
+    titleInputElement.classList.add('mt-3');
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.placeholder = 'Workout Title';
+    titleInput.setAttribute('id', 'workoutTitle');
+    const titleButton = document.createElement('button');
+    titleButton.classList.add('btn', 'btn-primary');
+    titleButton.innerText = 'Add Title';
+    titleButton.setAttribute('data-action', 'addWorkoutTitle');
+    titleButton.setAttribute('data-title', workout.title);
+    titleInputElement.appendChild(titleInput);
+    titleInputElement.appendChild(titleButton);
+    container.appendChild(titleInputElement);
     // create and add an add workout button
     const addWorkoutElement = document.createElement('div');
     addWorkoutElement.classList.add('mt-3');
@@ -25,22 +43,26 @@ export function renderAddWorkoutForm(workout) {
 
     const addWorkoutButton = document.createElement('button');
     addWorkoutButton.classList.add('btn', 'btn-primary');
-    addWorkoutButton.setAttribute('data-action', 'addWorkout');
+    addWorkoutButton.setAttribute('data-action', 'addWorkoutDate');
     addWorkoutButton.innerText = 'New workout';
     addWorkoutElement.appendChild(addWorkoutInput);
     addWorkoutElement.appendChild(addWorkoutButton);
-    container.appendChild(addWorkoutElement);
+    newWorkoutElement.appendChild(addWorkoutElement);
+    container.appendChild(newWorkoutElement);
 
     const workoutElement = document.createElement('li');
     workoutElement.classList.add('list-group-item');
     if (workout.date) {
         if (workout.date.length > 11) {
             const date = workout.date.slice(0, -9);
-            workoutElement.innerHTML = `<strong>${date}</strong>`;
+            workoutElement.innerHTML = `<strong>${date}: ${workout.title}</strong>`;
         }
         else {
-            workoutElement.innerHTML = `<strong>${workout.date}</strong>`;
+            workoutElement.innerHTML = `<strong>${workout.date}: ${workout.title}</strong>`;
         }
+    }
+    else if (workout.title) {
+        workoutElement.innerHTML = `<strong>${workout.title}</strong>`;
     }
 
     // create and add an add exercise button
@@ -68,7 +90,12 @@ export function renderAddWorkoutForm(workout) {
 
         exercise.sets.forEach(set => {
             const setElement = document.createElement('div');
-            setElement.innerText = `${set.reps} reps @ ${set.load} kg`;
+            if (set.reps == 1) {
+            setElement.innerText = `${set.reps} rep, ${set.load} kg @ ${set.rpe} RPE`;
+            }
+            else {
+            setElement.innerText = `${set.reps} reps, ${set.load} kg @ ${set.rpe} RPE`;
+            }
             exerciseElement.appendChild(setElement);
         });
 
@@ -99,6 +126,11 @@ export function renderAddWorkoutForm(workout) {
         loadInput.placeholder = 'Load (kg) -- 0 if bw';
         loadInput.classList.add('form-control', 'd-inline-block', 'w-auto');
 
+        const rpeInput = document.createElement('input');
+        rpeInput.type = 'number';
+        rpeInput.placeholder = 'RPE';
+        rpeInput.classList.add('form-control', 'd-inline-block', 'w-auto');
+
         const addSetButton = document.createElement('button');
         addSetButton.classList.add('btn', 'btn-secondary', 'addSetButton', 'mb-2');
         addSetButton.setAttribute('data-date', workout.date);
@@ -108,6 +140,7 @@ export function renderAddWorkoutForm(workout) {
 
         addSetElement.appendChild(repsInput);
         addSetElement.appendChild(loadInput);
+        addSetElement.appendChild(rpeInput);
         addSetElement.appendChild(addSetButton);
         exerciseElement.appendChild(addSetElement);
     });

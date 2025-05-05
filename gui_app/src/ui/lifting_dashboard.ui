@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RepDojo</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../assets/images/repdojo_clean_symbol_16x16.png</normaloff>../../assets/images/repdojo_clean_symbol_16x16.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* General */
+QWidget {
+    background-color: #121212;
+    color: #E0E0E0;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #1F1F1F;
+    border: 1px solid #F4A300;  /* orange */
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #E0E0E0;
+}
+QPushButton:hover {
+    background-color: #2A2A2A;
+}
+QPushButton:pressed {
+    background-color: #C67C00;  /* deeper orange */
+}
+
+/* ComboBox */
+QComboBox {
+    background-color: #1F1F1F;
+    border: 1px solid #4CAF50;  /* green */
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #E0E0E0;
+}
+QComboBox:hover {
+    background-color: #2A2A2A;
+}
+QComboBox QAbstractItemView {
+    background-color: #1F1F1F;
+    border: 1px solid #4CAF50;
+    selection-background-color: #4CAF50;
+    color: #121212;
+}
+
+/* SpinBox */
+QSpinBox {
+    background-color: #1F1F1F;
+    border: 1px solid #F4A300;
+    border-radius: 6px;
+    padding: 4px;
+    color: #E0E0E0;
+}
+QSpinBox::up-button, QSpinBox::down-button {
+    subcontrol-origin: border;
+    background-color: #2A2A2A;
+    border: none;
+}
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #C67C00;
+}
+
+/* LineEdit */
+QLineEdit {
+    background-color: #1F1F1F;
+    border: 1px solid #F4A300;
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #E0E0E0;
+}
+
+/* ToolTip */
+QToolTip {
+    background-color: #2A2A2A;
+    color: #E0E0E0;
+    border: 1px solid #F4A300;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+/* Shadows &amp; Frames - emulated via borders where applicable */
+QFrame {
+    border: 1px solid #2A2A2A;
+    border-radius: 8px;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,5,0,0,0,0">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0">
+      <item>
+       <widget class="QComboBox" name="comboBox">
+        <property name="placeholderText">
+         <string>Time Range</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Week</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 Weeks</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Month</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Months</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>6 Months</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Year</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="graphHBoxLayout"/>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="spinBox"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="workoutHistorLabel">
+      <property name="text">
+       <string>Workout History</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QDateEdit" name="fromDateEdit"/>
+      </item>
+      <item>
+       <widget class="QDateEdit" name="toDateEdit">
+        <property name="date">
+         <date>
+          <year>2025</year>
+          <month>1</month>
+          <day>1</day>
+         </date>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="filterButton">
+        <property name="text">
+         <string>Filter</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="workoutScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>765</width>
+         <height>97</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTableWidget" name="workoutTableWidget"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView_2">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionDark_Mode"/>
+   </widget>
+   <addaction name="menuView"/>
+   <addaction name="menuView_2"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDark_Mode">
+   <property name="text">
+    <string>Dark Mode</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

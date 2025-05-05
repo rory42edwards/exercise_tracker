@@ -5,11 +5,23 @@ import { saveWorkout } from '../modules/workoutAPI.js'
 
 function handleAction(type, payload, workout) {
     switch (type) {
-        case 'addWorkout':
+        case 'addWorkoutTitle':
+            workout.title = payload;
+            break;
+        
+        case 'addWorkoutDate':
             workout.date = payload;
             break;
         
         case 'saveWorkout':
+            if (!workout.date) {
+                alert('Please enter a date before saving a workout.');
+                break;
+            }
+            if (!workout.title) {
+                alert('Please enter a title before saving a workout.');
+                break;
+            }
             console.log("saveWorkout payload", payload);
             saveWorkout(payload);
             return;
@@ -19,7 +31,7 @@ function handleAction(type, payload, workout) {
             break;
 
         case 'addSet':
-            workout.getExercise(payload.exercise).addSet(payload.reps, payload.load);
+            workout.getExercise(payload.exercise).addSet(payload.reps, payload.load, payload.rpe);
             break;
 
         case 'removeExercise':
@@ -49,10 +61,19 @@ async function init() {
         if (!action) return;
 
         switch (action) {
-            case 'addWorkout': {
-                console.log("adding workout");
+            case 'addWorkoutTitle': {
+                console.log("adding workout title");
+                const title = document.getElementById('workoutTitle').value;
+                if (!title) break;
+                handleAction('addWorkoutTitle', title, currentWorkout);
+                break;
+            }
+
+            case 'addWorkoutDate': {
+                console.log("adding workout date");
                 const newDate = document.getElementById('workoutDate').value;
-                if (newDate) handleAction('addWorkout', newDate, currentWorkout);
+                if (!newDate) break;
+                handleAction('addWorkoutDate', newDate, currentWorkout);
                 break;
             }
 
@@ -68,6 +89,10 @@ async function init() {
                 const input = button.parentElement.querySelector('input[type="text"]');
                 const exerciseName = input?.value;
                 const date = button.dataset.date;
+                if (!date) {
+                    alert('Please enter a date before adding a workout.');
+                    break;
+                }
                 if (exerciseName) handleAction('addExercise', { date, name: exerciseName }, currentWorkout);
                 break;
             }
@@ -85,11 +110,13 @@ async function init() {
                 console.log("adding set");
                 const reps = parseInt(button.parentElement.querySelector('input[placeholder="Reps"]').value);
                 const load = parseFloat(button.parentElement.querySelector('input[placeholder^="Load"]').value);
+                const rpe = parseInt(button.parentElement.querySelector('input[placeholder="RPE"]').value);
                 handleAction('addSet', {
                     date: button.dataset.date,
                     exercise: button.dataset.exercise,
                     reps,
-                    load
+                    load,
+                    rpe
                 }, currentWorkout);
                 break;
             }

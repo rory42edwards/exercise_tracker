@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, session, g, jsonify, request
+from flask import Blueprint, render_template, g, jsonify, request, current_app
 from exercise_tracker import tracker
-from exercise_tracker.workout import Workout
-from exercise_tracker.exercise import Exercise
+# from exercise_tracker.workout import Workout
+# from exercise_tracker.exercise import Exercise
 from exercise_analysis import analyser
+from db.models import Workout, Exercise, Set
+from datetime import datetime
+from sqlalchemy import desc
 
 
 bp = Blueprint('main', __name__)
@@ -33,6 +36,7 @@ def home():
 
 @bp.route('/history')
 def history():
+    session = current_app.session_local()
     workouts = g.tracker.workouts_by_date()
     date = session.get('date')
     loaded = session.get('loaded', False)
@@ -79,13 +83,73 @@ def save_tracker():
 
 @bp.route('/save_workout', methods=['POST'])
 def save_workout():
+    session = current_app.session_local()
     data = request.get_json()
-    if data is None:
-        raise ValueError("No data received or invalid JSON")
-    date_str = data['date']
-    workout = Workout(date_str)
-    workout.exercises = [Exercise.from_dict(data_entry) for data_entry in data['exercises']]
-    g.tracker.workouts.append(workout)
-    print(f"saving workout: {workout} to file")
-    g.tracker.save_to_file('data/workouts.json')
-    return jsonify({'success': True})
+    try:
+        if data is None:
+            raise ValueError("No data received or invalid JSON")
+        date_str = data['date']
+        title = data.get("title", "")
+        notes = data.get("notes", "")  # default to empty string if missing
+        workout = Workout(
+                date=datetime.strptime(date_str, "%Y-%m-%d").date(),
+                title=title,
+                notes=notes
+        )
+        session.add(workout)
+        session.flush()
+
+        for i, exercise in enumerate(data['exercises']):
+            exercise_obj = Exercise(
+                    workout_id=workout.id,
+                    name=exercise['name'],
+                    exercise_order=i
+            )
+            session.add(exercise_obj)
+            session.flush()
+            for idx, s in enumerate(exercise['sets']):
+                rpe = s.get('rpe', -1)  # default rpe to -1 if it doesn't exist
+                set_obj = Set(
+                        exercise_id=exercise_obj.id,
+                        reps=s['reps'],
+                        load=s['load'],
+                        rpe=rpe,
+                        set_order=idx
+                )
+                session.add(set_obj)
+
+        session.commit()
+        return jsonify({'status': 'success'}), 200
+
+    except Exception as e:
+        print(f"Error in save_workout: {e}")
+        session.rollback()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        session.close()
+
+
+@bp.route('/get_last_exercise_data/<exercise_name>', methods=['GET'])
+def get_last_exercise_data(exercise_name: str):
+    session = current_app.session_local()
+    try:
+        result = (
+                session.query(Workout.date)
+                .join(Set)
+                .filter(Set.exercise_name == exercise_name)
+                .order_by(desc(Workout.date))
+                .first()
+        )
+        if result:
+            return jsonify({"last_date": result.date.isoformat()}), 200
+        else:
+            return jsonify({"last_date": None}), 200
+
+    except Exception as e:
+        print(f"Error in get_last_exercise_data: {e}")
+        session.rollback()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+    finally:
+        session.close()

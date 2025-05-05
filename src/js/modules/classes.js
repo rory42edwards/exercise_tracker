@@ -1,7 +1,8 @@
 export class Set {
-    constructor (reps, load) {
+    constructor (reps, load, rpe=-1) {
         this.reps = parseInt(reps);
         this.load = parseFloat(load);
+        this.rpe = parseInt(rpe);
     }
 }
 
@@ -11,14 +12,15 @@ export class Exercise {
         this.sets = []
     }
 
-    addSet (reps, load) {
-        const set = new Set(reps, load);
+    addSet (reps, load, rpe) {
+        const set = new Set(reps, load, rpe);
         this.sets.push(set)
     }
 }
 
 export class Workout {
-    constructor (date) {
+    constructor (date, title) {
+        this.title = title
         this.date = date
         this.exercises = []
     }

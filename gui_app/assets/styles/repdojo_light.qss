@@ -1,0 +1,83 @@
+
+/* General */
+QWidget {
+    background-color: #FAFAFA;
+    color: #212121;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #FFFFFF;
+    border: 1px solid #F4A300;  /* orange */
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #212121;
+}
+QPushButton:hover {
+    background-color: #FFF3E0;
+}
+QPushButton:pressed {
+    background-color: #F4A300;
+    color: #FFFFFF;
+}
+
+/* ComboBox */
+QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #4CAF50;  /* green */
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #212121;
+}
+QComboBox:hover {
+    background-color: #F1F8E9;
+}
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #4CAF50;
+    selection-background-color: #4CAF50;
+    color: #FFFFFF;
+}
+
+/* SpinBox */
+QSpinBox {
+    background-color: #FFFFFF;
+    border: 1px solid #F4A300;
+    border-radius: 6px;
+    padding: 4px;
+    color: #212121;
+}
+QSpinBox::up-button, QSpinBox::down-button {
+    subcontrol-origin: border;
+    background-color: #E0E0E0;
+    border: none;
+}
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #F4A300;
+}
+
+/* LineEdit */
+QLineEdit {
+    background-color: #FFFFFF;
+    border: 1px solid #F4A300;
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #212121;
+}
+
+/* ToolTip */
+QToolTip {
+    background-color: #FFF3E0;
+    color: #212121;
+    border: 1px solid #F4A300;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+/* Shadows & Frames - emulated via borders where applicable */
+QFrame {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+}
