@@ -1,7 +1,7 @@
 import { Workout } from '../modules/classes.js'
 import { renderAddWorkoutForm } from '../modules/logWorkoutUI.js'
 import { saveWorkoutState, loadWorkoutState } from '../modules/workoutState.js'
-import { saveWorkout } from '../modules/workoutAPI.js'
+import { saveWorkout, fetchLastExerciseData } from '../modules/workoutAPI.js'
 
 function handleAction(type, payload, workout) {
     switch (type) {
@@ -85,15 +85,7 @@ async function init() {
             }
 
             case 'addExercise': {
-                console.log("adding exercise");
-                const input = button.parentElement.querySelector('input[type="text"]');
-                const exerciseName = input?.value;
-                const date = button.dataset.date;
-                if (!date) {
-                    alert('Please enter a date before adding a workout.');
-                    break;
-                }
-                if (exerciseName) handleAction('addExercise', { date, name: exerciseName }, currentWorkout);
+                addExercise(button, currentWorkout)
                 break;
             }
 
@@ -134,3 +126,27 @@ async function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+async function addExercise(button, currentWorkout) {
+    console.log("adding exercise");
+    const input = button.parentElement.querySelector('input[type="text"]');
+    const exerciseName = input?.value;
+    const date = button.dataset.date;
+    if (exerciseName) {
+        handleAction('addExercise', { date, name: exerciseName }, currentWorkout)
+        // fetch last session data
+        const last = await fetchLastExerciseData(exerciseName);
+        if (last && last.sets.length > 0) {
+            const msg = `Last time (${last.date}): ` + last.sets.map(s => `${s.reps}x${s.load}kg @ RPE ${s.rpe ?? '-'}`
+            ).join(', ');
+            const exerciseElement = document.querySelector(`[data-exercise="${exerciseName}"]`);
+            if (exerciseElement) {
+                const lastSessionInfo = document.createElement('div');
+                lastSessionInfo.classList.add('text-muted', 'small');
+                lastSessionInfo.innerText = msg;
+                exerciseElement.appendChild(lastSessionInfo);
+            } else {
+                alert(msg);
+            }
+        }
+    }
+}

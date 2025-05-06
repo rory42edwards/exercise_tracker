@@ -86,6 +86,7 @@ export function renderAddWorkoutForm(workout) {
 
     workout.exercises.slice().reverse().forEach(exercise => {
         const exerciseElement = document.createElement('div');
+        exerciseElement.setAttribute('data-exercise', exercise.name);
         exerciseElement.innerHTML = `<strong>${exercise.name}</strong>`;
 
         exercise.sets.forEach(set => {

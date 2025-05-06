@@ -1,6 +1,7 @@
-from db.models import Set, Exercise, Workout
-from db.db_local import SessionLocal
+from app.db.models import Set, Exercise, Workout
+from app.db.db_local import SessionLocal
 from datetime import date
+from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 
 
