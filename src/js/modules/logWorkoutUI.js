@@ -15,6 +15,15 @@ export function renderAddWorkoutForm(workout) {
     saveElement.appendChild(saveButton);
     container.appendChild(saveElement);
 
+    // create and add a clear local state button
+    const clearElement = document.createElement('div');
+    const clearButton = document.createElement('button');
+    clearButton.classList.add('btn', 'btn-danger');
+    clearButton.setAttribute('data-action', 'clearLocalWorkout');
+    clearButton.innerText = 'Clear Local Workout';
+    clearElement.appendChild(clearButton);
+    container.appendChild(clearElement);
+
     // create and add a title/date section
     const newWorkoutElement = document.createElement('div');
     newWorkoutElement.classList.add('mt-3');

@@ -12,7 +12,7 @@ function handleAction(type, payload, workout) {
         case 'addWorkoutDate':
             workout.date = payload;
             break;
-        
+
         case 'saveWorkout':
             if (!workout.date) {
                 alert('Please enter a date before saving a workout.');
@@ -24,6 +24,7 @@ function handleAction(type, payload, workout) {
             }
             console.log("saveWorkout payload", payload);
             saveWorkout(payload);
+            alert('Workout saved to database.');
             return;
         
         case 'addExercise':
@@ -75,6 +76,17 @@ async function init() {
                 if (!newDate) break;
                 handleAction('addWorkoutDate', newDate, currentWorkout);
                 break;
+            }
+
+            case 'clearLocalWorkout': {
+                console.log("clearing local workout data");
+                const confirmed = confirm("Are you sure you want to clear your saved workout?");
+                if (confirmed) {
+                    localStorage.removeItem('workoutState');
+                    alert('Saved workout cleared.');
+                    window.location.reload();
+                    break;
+                } else break;
             }
 
             case 'saveWorkout': {
