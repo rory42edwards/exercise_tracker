@@ -1,0 +1,18 @@
+[Unit]
+Description=RepDojo Flask Web App via Gunicorn
+After=network.target
+
+[Service]
+User=rory
+Group=rory
+WorkingDirectory=/home/rory/exercise_tracker
+Environment=FLASK_ENV=production
+Environment="PATH=/home/rory/exercise_tracker/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+ExecStart=/home/rory/exercise_tracker/bin/gunicorn --config /home/rory/exercise_tracker/gunicorn_config.py web_app.app:app
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+

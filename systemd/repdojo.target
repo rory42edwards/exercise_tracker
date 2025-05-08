@@ -1,0 +1,7 @@
+[Unit]
+Description=RepDojo Service Group
+Requires=repdojo-web.service repdojo-api.service
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
