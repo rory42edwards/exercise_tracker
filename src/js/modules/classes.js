@@ -19,7 +19,7 @@ export class Exercise {
 }
 
 export class Workout {
-    constructor (date, title) {
+    constructor (date, title='') {
         this.title = title
         this.date = date
         this.exercises = []
@@ -55,6 +55,19 @@ export class Workout {
 
     hasDate (date) {
         if (this.date === date) return true;
+    }
+
+    static fromObject(obj) {
+        const workout = new Workout(obj.date, obj.title);
+        workout.exercises = obj.exercises.map(e => ({
+            name: e.name,
+            sets: e.sets.map(s => ({
+                reps: s.reps,
+                load: s.load,
+                rpe: s.rpe
+            }))
+        }));
+        return workout;
     }
 }
 

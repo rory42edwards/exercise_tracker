@@ -8,6 +8,6 @@ export function loadWorkoutState() {
     const savedState = localStorage.getItem('workoutState');
     if (!savedState) return null;
 
-    const workout = new Workout();
-    return workout;
+    const data = JSON.parse(savedState);
+    return Workout.fromObject(data);
 }
