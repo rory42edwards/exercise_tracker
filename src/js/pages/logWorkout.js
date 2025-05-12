@@ -3,7 +3,7 @@ import { renderAddWorkoutForm } from '../modules/logWorkoutUI.js'
 import { saveWorkoutState, loadWorkoutState } from '../modules/workoutState.js'
 import { saveWorkout, fetchLastExerciseData } from '../modules/workoutAPI.js'
 
-function handleAction(type, payload, workout) {
+async function handleAction(type, payload, workout) {
     switch (type) {
         case 'addWorkoutTitle':
             workout.title = payload;
@@ -23,8 +23,17 @@ function handleAction(type, payload, workout) {
                 break;
             }
             console.log("saveWorkout payload", payload);
-            saveWorkout(payload);
-            alert('Workout saved to database.');
+            try {
+                const result = await saveWorkout(payload);
+                if (result.success) {
+                    alert('Workout saved to database.');
+                } else {
+                    alert('Error saving workout: ' + (result.error || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to save workout. Network or server error.');
+            }
             return;
         
         case 'addExercise':
