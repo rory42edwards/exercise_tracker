@@ -159,6 +159,17 @@ async function addExercise(button, currentWorkout) {
             } else {
                 alert(msg);
             }
+        } else {
+            const msg = `No previous exercise data found.`;
+            const exerciseElement = document.querySelector(`[data-exercise="${exerciseName}"]`);
+            if (exerciseElement) {
+                const lastSessionInfo = document.createElement('div');
+                lastSessionInfo.classList.add('text-muted', 'small');
+                lastSessionInfo.innerText = msg;
+                exerciseElement.appendChild(lastSessionInfo);
+            } else {
+                alert(msg);
+            }
         }
     }
 }
