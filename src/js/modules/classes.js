@@ -59,14 +59,11 @@ export class Workout {
 
     static fromObject(obj) {
         const workout = new Workout(obj.date, obj.title);
-        workout.exercises = obj.exercises.map(e => ({
-            name: e.name,
-            sets: e.sets.map(s => ({
-                reps: s.reps,
-                load: s.load,
-                rpe: s.rpe
-            }))
-        }));
+        workout.exercises = obj.exercises.map(e => {
+            const exercise = new Exercise(e.name);
+            exercise.sets = e.sets.map(s => new Set(s.reps, s.load, s.rpe));
+            return exercise;
+        });
         return workout;
     }
 }
