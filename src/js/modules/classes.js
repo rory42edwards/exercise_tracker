@@ -19,10 +19,11 @@ export class Exercise {
 }
 
 export class Workout {
-    constructor (date, title='') {
+    constructor (date, title='', notes='') {
         this.title = title
         this.date = date
         this.exercises = []
+        this.notes = notes
     }
 
     addExercise (name) {

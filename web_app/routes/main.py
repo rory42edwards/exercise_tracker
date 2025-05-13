@@ -119,12 +119,12 @@ def save_workout():
                 session.add(set_obj)
 
         session.commit()
-        return jsonify({'status': 'success'}), 200
+        return jsonify({"success": True}), 200
 
     except Exception as e:
         print(f"Error in save_workout: {e}")
         session.rollback()
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({"success": False, "error": str(e)}), 500
 
     finally:
         session.close()

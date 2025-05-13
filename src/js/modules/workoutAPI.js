@@ -1,17 +1,24 @@
+import { apiBaseUrl } from '../modules/apiURL.js'
+
 export async function saveWorkout(data) {
-    const response = await fetch('/save_workout', {
+    const response = await fetch(apiBaseUrl+'/save_workout', {
         method: 'post',
         headers: {
             'content-type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({workout: data})
     });
-    return response.json();
+    console.log(JSON.stringify({workout: data}))
+
+    if (!response.ok) {
+        throw new Error('Failed to save workout');
+    }
+    return await response.json();
 }
 
 export async function fetchLastExerciseData(exerciseName) {
     try {
-        const response = await fetch(`http://localhost:8000/api/last_exercise_data?name=${encodeURIComponent(exerciseName)}`);
+        const response = await fetch(apiBaseUrl+`/last_exercise_data?name=${encodeURIComponent(exerciseName)}`);
         if (!response.ok) {
             throw new Error("API request failed");
         }

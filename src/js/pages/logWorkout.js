@@ -25,6 +25,7 @@ async function handleAction(type, payload, workout) {
             console.log("saveWorkout payload", payload);
             try {
                 const result = await saveWorkout(payload);
+                console.log(result.success);
                 if (result.success) {
                     alert('Workout saved to database.');
                 } else {
