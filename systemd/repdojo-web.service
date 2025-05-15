@@ -1,6 +1,7 @@
 [Unit]
 Description=RepDojo Flask Web App via Gunicorn
 After=network.target
+PartOf=repdojo.target
 
 [Service]
 User=rory

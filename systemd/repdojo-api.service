@@ -1,6 +1,7 @@
 [Unit]
 Description=RepDojo FastAPI Service
 After=network.target
+PartOf=repdojo.target
 
 [Service]
 User=rory
